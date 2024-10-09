@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Indicadores de Tráfego Originado</h2>
+    <a href="{% url 'trafego_originado_create' %}" class="btn btn-primary mb-3">Adicionar Novo Indicador</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ano</th>
+                <th>Mês</th>
+                <th>Tráfego de Dados 3G</th>
+                <th>Tráfego de Dados 4G</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indicador in trafego_originado_list %}
+            <tr>
+                <td>{{ indicador.ano }}</td>
+                <td>{{ indicador.mes }}</td>
+                <td>{{ indicador.trafego_dados_3g_upgrade }}</td>
+                <td>{{ indicador.trafego_dados_4g }}</td>
+                <td>
+                    <a href="{% url 'trafego_originado_detail' indicador.pk %}" class="btn btn-info btn-sm">Detalhes</a>
+                    <a href="{% url 'trafego_originado_update' indicador.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'trafego_originado_delete' indicador.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum indicador cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
