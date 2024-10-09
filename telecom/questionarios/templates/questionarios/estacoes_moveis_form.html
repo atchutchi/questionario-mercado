@@ -1,0 +1,70 @@
+<!-- questionarios/templates/questionarios/estacoes_moveis_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Editar{% else %}Criar{% endif %} Indicador de Estações Móveis</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+{% endblock %}
+
+<!-- questionarios/templates/questionarios/estacoes_moveis_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Lista de Indicadores de Estações Móveis</h2>
+<a href="{% url 'estacoes_moveis_create' %}" class="btn btn-primary">Criar Novo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ano</th>
+            <th>Mês</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for indicador in estacoes_moveis_list %}
+        <tr>
+            <td>{{ indicador.ano }}</td>
+            <td>{{ indicador.mes }}</td>
+            <td>
+                <a href="{% url 'estacoes_moveis_detail' indicador.pk %}">Ver</a>
+                <a href="{% url 'estacoes_moveis_update' indicador.pk %}">Editar</a>
+                <a href="{% url 'estacoes_moveis_delete' indicador.pk %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+<!-- questionarios/templates/questionarios/estacoes_moveis_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Detalhes do Indicador de Estações Móveis</h2>
+<p>Ano: {{ indicador.ano }}</p>
+<p>Mês: {{ indicador.mes }}</p>
+<!-- Adicione mais campos conforme necessário -->
+<p>Total de Utilizadores: {{ total_utilizadores }}</p>
+<p>Total de Carregamentos: {{ total_carregamentos }}</p>
+<p>Total de Levantamentos: {{ total_levantamentos }}</p>
+<p>Total de Transferências: {{ total_transferencias }}</p>
+<a href="{% url 'estacoes_moveis_update' indicador.pk %}" class="btn btn-primary">Editar</a>
+<a href="{% url 'estacoes_moveis_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+{% endblock %}
+
+<!-- questionarios/templates/questionarios/estacoes_moveis_confirm_delete.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Confirmar Exclusão</h2>
+<p>Tem certeza que deseja excluir o indicador de Estações Móveis para {{ object.ano }}/{{ object.mes }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+</form>
+<a href="{% url 'estacoes_moveis_list' %}" class="btn btn-secondary">Cancelar</a>
+{% endblock %}
