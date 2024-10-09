@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-atchutchi-questionariom-tergl8n5w33.ws-eu116.gitpod.io']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
+
 
 # Application definition
 
@@ -54,13 +56,20 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+AUTH_USER_MODEL = 'usuarios.CustomUser'
+
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'usuarios.custom_signup.CustomSignupForm'
+ACCOUNT_FORMS = {'signup': 'usuarios.custom_signup.CustomSignupForm'}
+
+
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_UNIQUE_EMAIL = True
 
-
-
-ACCOUNT_SIGNUP_FORM_CLASS = 'usuarios.forms.CustomSignupForm'
 
 
 MIDDLEWARE = [
@@ -72,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'usuarios.middleware.ApprovalMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'telecom.urls'
@@ -123,6 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Internationalization
