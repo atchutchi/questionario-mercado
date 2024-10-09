@@ -6,7 +6,7 @@ class ApprovalMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.user.is_authenticated and not request.user.userprofile.is_approved:
+        if request.user.is_authenticated and not request.user.is_approved:
             if request.path != reverse('account_logout'):
                 return redirect('account_login')
         return self.get_response(request)
