@@ -1,6 +1,12 @@
 <!-- questionarios/templates/questionarios/estacoes_moveis_confirm_delete.html -->
 {% extends "base.html" %}
+{% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/estacoes_moveis.css' %}">
+{% endblock %}
+
+ 
 {% block content %}
 <h2>Confirmar Exclusão</h2>
 <p>Tem certeza que deseja excluir o indicador de Estações Móveis para {{ object.ano }}/{{ object.mes }}?</p>

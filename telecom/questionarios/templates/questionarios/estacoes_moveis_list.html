@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/estacoes_moveis.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Indicadores de Estações Móveis</h2>
+    <a href="{% url 'estacoes_moveis_create' %}" class="btn btn-primary mb-3">Adicionar Novo Indicador</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ano</th>
+                <th>Mês</th>
+                <th>Total Utilizadores</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indicador in estacoes_moveis_list %}
+            <tr>
+                <td>{{ indicador.ano }}</td>
+                <td>{{ indicador.mes }}</td>
+                <td>{{ indicador.numero_utilizadores }}</td>
+                <td>
+                    <a href="{% url 'estacoes_moveis_detail' indicador.pk %}" class="btn btn-info btn-sm">Detalhes</a>
+                    <a href="{% url 'estacoes_moveis_update' indicador.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'estacoes_moveis_delete' indicador.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Nenhum indicador cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,5 +1,3 @@
-# questionarios/views/estacoes_moveis.py
-
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
@@ -45,12 +43,3 @@ class EstacoesMoveisDetailView(LoginRequiredMixin, PermissionRequiredMixin, Deta
     template_name = 'questionarios/estacoes_moveis_detail.html'
     context_object_name = 'indicador'
     permission_required = 'questionarios.view_estacoesmoveisindicador'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        indicador = self.get_object()
-        context['total_utilizadores'] = indicador.total_utilizadores
-        context['total_carregamentos'] = indicador.total_carregamentos
-        context['total_levantamentos'] = indicador.total_levantamentos
-        context['total_transferencias'] = indicador.total_transferencias
-        return context
