@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/trafego_internet.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">{% if form.instance.pk %}Editar{% else %}Criar{% endif %} Indicador de Tráfego de Internet</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Informações Gerais
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.ano.label_tag }}
+                        {{ form.ano }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.mes.label_tag }}
+                        {{ form.mes }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Tráfego de Serviços de Internet fixo via rádio
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        {{ form.trafego_total.label_tag }}
+                        {{ form.trafego_total }}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ form.por_via_satelite.label_tag }}
+                        {{ form.por_via_satelite }}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ form.por_sistema_hertziano_fixo_terra.label_tag }}
+                        {{ form.por_sistema_hertziano_fixo_terra }}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ form.fibra_otica.label_tag }}
+                        {{ form.fibra_otica }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adicione mais seções para os outros grupos de campos -->
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/trafego_internet_form_validation.js' %}"></script>
+{% endblock %}

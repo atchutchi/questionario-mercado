@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi
+from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi, trafego_internet
 
 urlpatterns = [
     # Estações Móveis
@@ -40,4 +40,12 @@ urlpatterns = [
     path('lbi/<int:pk>/editar/', lbi.LBIUpdateView.as_view(), name='lbi_update'),
     path('lbi/<int:pk>/excluir/', lbi.LBIDeleteView.as_view(), name='lbi_delete'),
     path('lbi/resumo/<int:ano>/', lbi.LBIResumoView.as_view(), name='lbi_resumo'),
+
+    #Tráfego Internet
+    path('trafego-internet/', trafego_internet.TrafegoInternetListView.as_view(), name='trafego_internet_list'),
+    path('trafego-internet/criar/', trafego_internet.TrafegoInternetCreateView.as_view(), name='trafego_internet_create'),
+    path('trafego-internet/<int:pk>/', trafego_internet.TrafegoInternetDetailView.as_view(), name='trafego_internet_detail'),
+    path('trafego-internet/<int:pk>/editar/', trafego_internet.TrafegoInternetUpdateView.as_view(), name='trafego_internet_update'),
+    path('trafego-internet/<int:pk>/excluir/', trafego_internet.TrafegoInternetDeleteView.as_view(), name='trafego_internet_delete'),
+    path('trafego-internet/resumo/<int:ano>/', trafego_internet.TrafegoInternetResumoView.as_view(), name='trafego_internet_resumo'),
 ]

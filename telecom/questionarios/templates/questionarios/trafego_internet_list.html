@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Indicadores de Tráfego de Internet</h2>
+    <a href="{% url 'trafego_internet_create' %}" class="btn btn-primary mb-3">Adicionar Novo Indicador</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ano</th>
+                <th>Mês</th>
+                <th>Tráfego Total</th>
+                <th>Banda Larga Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indicador in trafego_internet_list %}
+            <tr>
+                <td>{{ indicador.ano }}</td>
+                <td>{{ indicador.get_mes_display }}</td>
+                <td>{{ indicador.trafego_total }}</td>
+                <td>{{ indicador.banda_larga_total }}</td>
+                <td>
+                    <a href="{% url 'trafego_internet_detail' indicador.pk %}" class="btn btn-info btn-sm">Detalhes</a>
+                    <a href="{% url 'trafego_internet_update' indicador.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'trafego_internet_delete' indicador.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum indicador cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
