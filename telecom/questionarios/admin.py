@@ -6,6 +6,7 @@ from .models.trafego_terminado import TrafegoTerminadoIndicador
 from .models.trafego_roaming_internacional import TrafegoRoamingInternacionalIndicador
 from .models.lbi import LBIIndicador
 from .models.trafego_internet import TrafegoInternetIndicador
+from .models import InternetFixoIndicador
 
 @admin.register(EstacoesMoveisIndicador)
 class EstacoesMoveisIndicadorAdmin(admin.ModelAdmin):
@@ -69,6 +70,39 @@ class TrafegoInternetIndicadorAdmin(admin.ModelAdmin):
         }),
         ('Tráfego por acesso público via rádio (PWLAN)', {
             'fields': ('acesso_livre', 'acesso_condicionado')
+        }),
+        ('Metadados', {
+            'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao')
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.criado_por = request.user
+        obj.atualizado_por = request.user
+        super().save_model(request, obj, form, change)
+
+@admin.register(InternetFixoIndicador)
+class InternetFixoIndicadorAdmin(admin.ModelAdmin):
+    list_display = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo', 'criado_por', 'data_criacao']
+    list_filter = ['ano', 'mes']
+    search_fields = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
+    readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    fieldsets = (
+        ('Informações Gerais', {
+            'fields': ('ano', 'mes')
+        }),
+        ('Número de assinantes de Internet fixo via rádio', {
+            'fields': ('cidade_bissau', 'bafata', 'biombo', 'bolama_bijagos', 'cacheu', 'gabu', 'oio', 'quinara', 'tombali')
+        }),
+        ('Número de assinantes activos de Internet Fixo via Rádio', {
+            'fields': ('airbox', 'sistema_hertziano_fixo_terra', 'outros_proxim', 'fibra_otica')
+        }),
+        ('Número de assinantes de Serviços de Internet por débito', {
+            'fields': ('banda_larga_256kbits_2mbits', 'banda_larga_2_4mbits', 'banda_larga_5_10mbits', 'banda_larga_outros')
+        }),
+        ('Número de assinantes de Internet por categoria', {
+            'fields': ('residencial', 'corporativo_empresarial', 'instituicoes_publicas', 'instituicoes_ensino', 'instituicoes_saude', 'ong_outros')
         }),
         ('Metadados', {
             'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao')

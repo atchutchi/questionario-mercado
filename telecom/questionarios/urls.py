@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi, trafego_internet
+from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi, trafego_internet, internet_fixo
 
 urlpatterns = [
     # Estações Móveis
@@ -48,4 +48,12 @@ urlpatterns = [
     path('trafego-internet/<int:pk>/editar/', trafego_internet.TrafegoInternetUpdateView.as_view(), name='trafego_internet_update'),
     path('trafego-internet/<int:pk>/excluir/', trafego_internet.TrafegoInternetDeleteView.as_view(), name='trafego_internet_delete'),
     path('trafego-internet/resumo/<int:ano>/', trafego_internet.TrafegoInternetResumoView.as_view(), name='trafego_internet_resumo'),
+
+    #Internet Fixo
+    path('internet-fixo/', internet_fixo.InternetFixoListView.as_view(), name='internet_fixo_list'),
+    path('internet-fixo/criar/', internet_fixo.InternetFixoCreateView.as_view(), name='internet_fixo_create'),
+    path('internet-fixo/<int:pk>/', internet_fixo.InternetFixoDetailView.as_view(), name='internet_fixo_detail'),
+    path('internet-fixo/<int:pk>/editar/', internet_fixo.InternetFixoUpdateView.as_view(), name='internet_fixo_update'),
+    path('internet-fixo/<int:pk>/excluir/', internet_fixo.InternetFixoDeleteView.as_view(), name='internet_fixo_delete'),
+    path('internet-fixo/resumo/<int:ano>/', internet_fixo.InternetFixoResumoView.as_view(), name='internet_fixo_resumo'),
 ]
