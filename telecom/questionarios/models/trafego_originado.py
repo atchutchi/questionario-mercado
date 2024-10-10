@@ -69,6 +69,28 @@ class TrafegoOriginadoIndicador(IndicadorBase):
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
 
+    def calcular_total_dados_3g(self):
+        return self.trafego_dados_3g_upgrade + self.internet_3g + self.internet_3g_placas_modem + self.internet_3g_modem_usb
+
+    def calcular_total_dados_4g(self):
+        return self.trafego_dados_4g + self.internet_4g + self.internet_4g_placas_modem + self.internet_4g_modem_usb
+
+    def calcular_total_sms(self):
+        return (self.sms_on_net + self.sms_off_net + self.sms_internacional + 
+                self.sms_cedeao + self.sms_palop + self.sms_cplp + 
+                self.sms_resto_africa + self.sms_resto_mundo)
+
+    def calcular_total_voz(self):
+        return (self.voz_on_net + self.voz_off_net + self.voz_mtn + 
+                self.voz_internacional + self.voz_cedeao + self.voz_cplp + 
+                self.voz_palop + self.voz_resto_africa + self.voz_resto_mundo)
+
+    def calcular_total_chamadas(self):
+        return (self.chamadas_on_net + self.chamadas_off_net + self.chamadas_mtn + 
+                self.chamadas_internacional + self.chamadas_cedeao + self.chamadas_cplp + 
+                self.chamadas_palop + self.chamadas_resto_africa + self.chamadas_resto_mundo)
+
+
     def __str__(self):
         return f"Tráfego Originado - {self.ano}/{self.mes}"
 

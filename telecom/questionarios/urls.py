@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional
+from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi
 
 urlpatterns = [
     # Estações Móveis
@@ -16,6 +16,7 @@ urlpatterns = [
     path('trafego-originado/<int:pk>/', trafego_originado.TrafegoOriginadoDetailView.as_view(), name='trafego_originado_detail'),
     path('trafego-originado/<int:pk>/editar/', trafego_originado.TrafegoOriginadoUpdateView.as_view(), name='trafego_originado_update'),
     path('trafego-originado/<int:pk>/excluir/', trafego_originado.TrafegoOriginadoDeleteView.as_view(), name='trafego_originado_delete'),
+    path('trafego-originado/resumo/<int:ano>/', trafego_originado.TrafegoOriginadoResumoView.as_view(), name='trafego_originado_resumo'),
 
     # Tráfego Terminado
     path('trafego-terminado/', trafego_terminado.TrafegoTerminadoListView.as_view(), name='trafego_terminado_list'),
@@ -31,4 +32,12 @@ urlpatterns = [
     path('trafego-roaming-internacional/<int:pk>/', trafego_roaming_internacional.TrafegoRoamingInternacionalDetailView.as_view(), name='trafego_roaming_internacional_detail'),
     path('trafego-roaming-internacional/<int:pk>/editar/', trafego_roaming_internacional.TrafegoRoamingInternacionalUpdateView.as_view(), name='trafego_roaming_internacional_update'),
     path('trafego-roaming-internacional/<int:pk>/excluir/', trafego_roaming_internacional.TrafegoRoamingInternacionalDeleteView.as_view(), name='trafego_roaming_internacional_delete'),
+
+    #lbi
+    path('lbi/', lbi.LBIListView.as_view(), name='lbi_list'),
+    path('lbi/criar/', lbi.LBICreateView.as_view(), name='lbi_create'),
+    path('lbi/<int:pk>/', lbi.LBIDetailView.as_view(), name='lbi_detail'),
+    path('lbi/<int:pk>/editar/', lbi.LBIUpdateView.as_view(), name='lbi_update'),
+    path('lbi/<int:pk>/excluir/', lbi.LBIDeleteView.as_view(), name='lbi_delete'),
+    path('lbi/resumo/<int:ano>/', lbi.LBIResumoView.as_view(), name='lbi_resumo'),
 ]
