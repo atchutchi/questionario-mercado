@@ -84,10 +84,9 @@ class TrafegoInternetIndicadorAdmin(admin.ModelAdmin):
 
 @admin.register(InternetFixoIndicador)
 class InternetFixoIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo', 'criado_por', 'data_criacao']
+    list_display = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
     list_filter = ['ano', 'mes']
     search_fields = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
-    readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
     fieldsets = (
         ('Informações Gerais', {
             'fields': ('ano', 'mes')
@@ -104,13 +103,4 @@ class InternetFixoIndicadorAdmin(admin.ModelAdmin):
         ('Número de assinantes de Internet por categoria', {
             'fields': ('residencial', 'corporativo_empresarial', 'instituicoes_publicas', 'instituicoes_ensino', 'instituicoes_saude', 'ong_outros')
         }),
-        ('Metadados', {
-            'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao')
-        }),
     )
-
-    def save_model(self, request, obj, form, change):
-        if not change:
-            obj.criado_por = request.user
-        obj.atualizado_por = request.user
-        super().save_model(request, obj, form, change)

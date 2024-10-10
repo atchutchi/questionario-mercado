@@ -1,1 +1,2 @@
 from .estacoes_moveis import EstacoesMoveisForm
+from .internet_fixo import InternetFixoForm

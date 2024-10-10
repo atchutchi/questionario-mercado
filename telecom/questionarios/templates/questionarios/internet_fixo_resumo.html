@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Resumo de Internet Fixo - {{ ano }}</h2>
+
+    <h3>Totais Trimestrais</h3>
+    {% for trimestre in totais_trimestrais %}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            {{ trimestre.trimestre }}º Trimestre
+        </div>
+        <div class="card-body">
+            <p><strong>Total de Assinantes via Rádio:</strong> {{ trimestre.total_assinantes_radio }}</p>
+            <p><strong>Total de Assinantes Ativos:</strong> {{ trimestre.total_assinantes_ativos }}</p>
+            <p><strong>Total de Banda Larga:</strong> {{ trimestre.total_banda_larga }}</p>
+            <p><strong>Total de Assinantes por Categoria:</strong> {{ trimestre.total_assinantes_categoria }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h3>Totais Anuais</h3>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Ano {{ ano }}
+        </div>
+        <div class="card-body">
+            <p><strong>Total de Assinantes via Rádio:</strong> {{ total_assinantes_radio_anual }}</p>
+            <p><strong>Total de Assinantes Ativos:</strong> {{ total_assinantes_ativos_anual }}</p>
+            <p><strong>Total de Banda Larga:</strong> {{ total_banda_larga_anual }}</p>
+            <p><strong>Total de Assinantes por Categoria:</strong> {{ total_assinantes_categoria_anual }}</p>
+        </div>
+    </div>
+
+    <h3>Detalhes Mensais</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mês</th>
+                <th>Assinantes via Rádio</th>
+                <th>Assinantes Ativos</th>
+                <th>Banda Larga</th>
+                <th>Assinantes por Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indicador in indicadores %}
+            <tr>
+                <td>{{ indicador.get_mes_display }}</td>
+                <td>{{ indicador.calcular_total_assinantes_radio }}</td>
+                <td>{{ indicador.calcular_total_assinantes_ativos }}</td>
+                <td>{{ indicador.calcular_total_banda_larga }}</td>
+                <td>{{ indicador.calcular_total_assinantes_categoria }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'internet_fixo_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+</div>
+{% endblock %}

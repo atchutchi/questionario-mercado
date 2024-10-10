@@ -1,5 +1,5 @@
 from django import forms
-from .models import InternetFixoIndicador
+from ..models import InternetFixoIndicador
 
 class InternetFixoForm(forms.ModelForm):
     class Meta:

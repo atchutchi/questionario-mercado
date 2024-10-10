@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from .base import IndicadorBase
 
@@ -33,6 +34,11 @@ class InternetFixoIndicador(IndicadorBase):
     instituicoes_ensino = models.IntegerField(validators=[MinValueValidator(0)])
     instituicoes_saude = models.IntegerField(validators=[MinValueValidator(0)])
     ong_outros = models.IntegerField(validators=[MinValueValidator(0)])
+
+    criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='internet_fixo_criado')
+    atualizado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='internet_fixo_atualizado')
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_atualizacao = models.DateTimeField(auto_now=True)
 
     def calcular_total_assinantes_radio(self):
         return (self.cidade_bissau + self.bafata + self.biombo + 
