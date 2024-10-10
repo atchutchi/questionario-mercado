@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import estacoes_moveis, trafego_originado, trafego_terminado
+from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional
 
 urlpatterns = [
     # Estações Móveis
@@ -24,4 +24,11 @@ urlpatterns = [
     path('trafego-terminado/<int:pk>/editar/', trafego_terminado.TrafegoTerminadoUpdateView.as_view(), name='trafego_terminado_update'),
     path('trafego-terminado/<int:pk>/excluir/', trafego_terminado.TrafegoTerminadoDeleteView.as_view(), name='trafego_terminado_delete'),
     path('trafego-terminado/resumo/<int:ano>/', trafego_terminado.TrafegoTerminadoResumoView.as_view(), name='trafego_terminado_resumo'),
+
+    # Tráfego de Roaming Internacional
+    path('trafego-roaming-internacional/', trafego_roaming_internacional.TrafegoRoamingInternacionalListView.as_view(), name='trafego_roaming_internacional_list'),
+    path('trafego-roaming-internacional/criar/', trafego_roaming_internacional.TrafegoRoamingInternacionalCreateView.as_view(), name='trafego_roaming_internacional_create'),
+    path('trafego-roaming-internacional/<int:pk>/', trafego_roaming_internacional.TrafegoRoamingInternacionalDetailView.as_view(), name='trafego_roaming_internacional_detail'),
+    path('trafego-roaming-internacional/<int:pk>/editar/', trafego_roaming_internacional.TrafegoRoamingInternacionalUpdateView.as_view(), name='trafego_roaming_internacional_update'),
+    path('trafego-roaming-internacional/<int:pk>/excluir/', trafego_roaming_internacional.TrafegoRoamingInternacionalDeleteView.as_view(), name='trafego_roaming_internacional_delete'),
 ]
