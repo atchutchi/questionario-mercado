@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{% static 'css/estacoes_moveis.css' %}">
 {% endblock %}
 
-
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">Detalhes do Indicador de Estações Móveis</h2>
@@ -16,7 +15,7 @@
         </div>
         <div class="card-body">
             <p><strong>Ano:</strong> {{ indicador.ano }}</p>
-            <p><strong>Mês:</strong> {{ indicador.mes }}</p>
+            <p><strong>Mês:</strong> {{ indicador.get_mes_display }}</p>
         </div>
     </div>
 
@@ -29,8 +28,8 @@
             <p><strong>Afectos a planos Pós-pagos (utilização):</strong> {{ indicador.afectos_planos_pos_pagos_utilizacao }}</p>
             <p><strong>Afectos a planos Pré-pagos:</strong> {{ indicador.afectos_planos_pre_pagos }}</p>
             <p><strong>Afectos a planos Pré-pagos (utilização):</strong> {{ indicador.afectos_planos_pre_pagos_utilizacao }}</p>
-            <p><strong>Associados a situações específicas:</strong> {{ indicador.associados_situacoes_especificas }}</p>
-            <p><strong>Outros (residuais):</strong> {{ indicador.outros_residuais }}</p>
+            <p><strong>Associados a situações específicas:</strong> {{ indicador.associados_situacoes_especificas|default_if_none:"N/A" }}</p>
+            <p><strong>Outros (residuais):</strong> {{ indicador.outros_residuais|default_if_none:"N/A" }}</p>
         </div>
     </div>
 
@@ -40,8 +39,8 @@
         </div>
         <div class="card-body">
             <p><strong>SMS:</strong> {{ indicador.sms }}</p>
-            <p><strong>MMS:</strong> {{ indicador.mms }}</p>
-            <p><strong>Mobile TV:</strong> {{ indicador.mobile_tv }}</p>
+            <p><strong>MMS:</strong> {{ indicador.mms|default_if_none:"N/A" }}</p>
+            <p><strong>Mobile TV:</strong> {{ indicador.mobile_tv|default_if_none:"N/A" }}</p>
             <p><strong>Roaming Internacional - OUT (PARC ROMING OUT):</strong> {{ indicador.roaming_internacional_out_parc_roaming_out }}</p>
             <p><strong>Banda larga móvel:</strong> {{ indicador.banda_larga_movel }}</p>
             <p><strong>Utilizadores 5G e upgrades:</strong> {{ indicador.utilizadores_5g_upgrades }}</p>

@@ -59,6 +59,11 @@ class TrafegoOriginadoIndicador(IndicadorBase):
     chamadas_resto_africa = models.BigIntegerField()
     chamadas_resto_mundo = models.BigIntegerField()
 
+    # Campos adicionais
+    operador_movel_b = models.BigIntegerField(null=True, blank=True)
+    operador_rede_fixa = models.BigIntegerField(null=True, blank=True)
+    numeros_curtos = models.BigIntegerField(null=True, blank=True)
+
     criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='trafego_originado_criado')
     atualizado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='trafego_originado_atualizado')
     data_criacao = models.DateTimeField(auto_now_add=True)

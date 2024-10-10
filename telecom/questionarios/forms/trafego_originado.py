@@ -50,4 +50,7 @@ class TrafegoOriginadoForm(forms.ModelForm):
             'chamadas_palop': forms.NumberInput(attrs={'class': 'form-control'}),
             'chamadas_resto_africa': forms.NumberInput(attrs={'class': 'form-control'}),
             'chamadas_resto_mundo': forms.NumberInput(attrs={'class': 'form-control'}),
+            'operador_movel_b': forms.NumberInput(attrs={'class': 'form-control'}),
+            'operador_rede_fixa': forms.NumberInput(attrs={'class': 'form-control'}),
+            'numeros_curtos': forms.NumberInput(attrs={'class': 'form-control'}),
         }

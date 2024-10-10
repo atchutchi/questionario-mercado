@@ -45,6 +45,24 @@ class EstacoesMoveisIndicador(IndicadorBase):
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
 
+    def calcular_total_utilizadores(self):
+        return self.numero_utilizadores
+
+    def calcular_total_carregamentos(self):
+        return self.total_carregamentos
+
+    def calcular_total_levantamentos(self):
+        return self.total_levantamentos
+
+    def calcular_total_transferencias(self):
+        return self.total_transferencias
+
+    def calcular_total_estacoes_moveis(self):
+        return (self.afectos_planos_pos_pagos + 
+                self.afectos_planos_pre_pagos + 
+                (self.associados_situacoes_especificas or 0) + 
+                (self.outros_residuais or 0))
+
     def str(self):
         return f"Estações Móveis e Mobile Money - {self.ano}/{self.mes}"
 
