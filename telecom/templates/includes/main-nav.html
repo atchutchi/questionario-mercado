@@ -1,3 +1,11 @@
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="collapse navbar-collapse" id="main-nav"></div>
     <ul class="navbar-nav w-auto mx-auto">
         <li class="nav-item d-block">
@@ -23,8 +31,14 @@
                 <a href="{% url 'trafego_roaming_internacional_list' %}" class="dropdown-item">Trafego Roaming Internacional</a>
                 <a href="{% url 'lbi_list' %}" class="dropdown-item">LBI</a>
                 <a href="{% url 'trafego_internet_list' %}" class="dropdown-item">Tráfego de Internet</a>
-                <a href="" class="dropdown-item">Internet Fixo</a>
-                <a href="" class="dropdown-item">Tarifario Voz</a>
+                <a href="{% url 'internet_fixo_list' %}" class="dropdown-item">Internet Fixo</a>
+                <div class="dropdown-submenu">
+                    <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Tarifario Voz</a>
+                    <div class="dropdown-menu submenu">
+                        <a href="{% url 'tarifario_orange_list' %}" class="dropdown-item">Orange</a>
+                        <a href="{% url 'tarifario_mtn_list' %}" class="dropdown-item">MTN</a>
+                    </div>
+                </div>
                 <a href="" class="dropdown-item">Receitas</a>
                 <a href="" class="dropdown-item">Empregos</a>
                 <a href="" class="dropdown-item">Investimento</a>
@@ -33,3 +47,9 @@
 
     </ul>
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+    <!-- Outros scripts existentes -->
+    <script src="{% static 'js/base.js' %}"></script>
+{% endblock %}

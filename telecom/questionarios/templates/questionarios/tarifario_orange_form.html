@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">{% if form.instance.pk %}Editar{% else %}Criar{% endif %} Tarifário Orange</h2>
+
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <!-- Internet USB Pré-pago -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Internet USB Pré-pago
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.dongle_3g.label_tag }}
+                        {{ form.dongle_3g }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.dongle_4g.label_tag }}
+                        {{ form.dongle_4g }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.airbox_4g.label_tag }}
+                        {{ form.airbox_4g }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.flybox_4g.label_tag }}
+                        {{ form.flybox_4g }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.flybox_4g_plus.label_tag }}
+                        {{ form.flybox_4g_plus }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Internet USB/BOX Residencial -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Internet USB/BOX Residencial
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.casa_zen_2mbits_adesao.label_tag }}
+                        {{ form.casa_zen_2mbits_adesao }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.casa_conforto_4mbits_adesao.label_tag }}
+                        {{ form.casa_conforto_4mbits_adesao }}
+                    </div>
+                </div>
+                <!-- Adicione outros campos residenciais aqui -->
+            </div>
+        </div>
+
+        <!-- Passes e Tarifas -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                Passes e Tarifas
+            </div>
+            <div class="card-body">
+                <!-- Adicione os campos de passes aqui -->
+            </div>
+        </div>
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'tarifario_orange_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'js/tarifario_orange_form_validation.js' %}"></script>
+{% endblock %}
+{% endblock %}

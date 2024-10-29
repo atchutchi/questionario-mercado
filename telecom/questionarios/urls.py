@@ -1,5 +1,14 @@
 from django.urls import path
-from .views import estacoes_moveis, trafego_originado, trafego_terminado, trafego_roaming_internacional, lbi, trafego_internet, internet_fixo
+from .views import (
+    estacoes_moveis, 
+    trafego_originado, 
+    trafego_terminado, 
+    trafego_roaming_internacional, 
+    lbi, 
+    trafego_internet, 
+    internet_fixo, 
+    tarifario_voz
+)
 
 urlpatterns = [
     # Estações Móveis
@@ -56,4 +65,20 @@ urlpatterns = [
     path('internet-fixo/<int:pk>/editar/', internet_fixo.InternetFixoUpdateView.as_view(), name='internet_fixo_update'),
     path('internet-fixo/<int:pk>/excluir/', internet_fixo.InternetFixoDeleteView.as_view(), name='internet_fixo_delete'),
     path('internet-fixo/resumo/<int:ano>/', internet_fixo.InternetFixoResumoView.as_view(), name='internet_fixo_resumo'),
+
+    # Tarifário Voz Orange
+    path('tarifario-orange/', tarifario_voz.TarifarioVozOrangeListView.as_view(), name='tarifario_orange_list'),
+    path('tarifario-orange/criar/', tarifario_voz.TarifarioVozOrangeCreateView.as_view(), name='tarifario_orange_create'),
+    path('tarifario-orange/<int:pk>/', tarifario_voz.TarifarioVozOrangeDetailView.as_view(), name='tarifario_orange_detail'),
+    path('tarifario-orange/<int:pk>/editar/', tarifario_voz.TarifarioVozOrangeUpdateView.as_view(), name='tarifario_orange_update'),
+    path('tarifario-orange/<int:pk>/excluir/', tarifario_voz.TarifarioVozOrangeDeleteView.as_view(), name='tarifario_orange_delete'),
+    path('tarifario-orange/resumo/<int:ano>/', tarifario_voz.TarifarioVozOrangeResumoView.as_view(), name='tarifario_orange_resumo'),
+
+    # Tarifário Voz MTN
+    path('tarifario-mtn/', tarifario_voz.TarifarioVozMTNListView.as_view(), name='tarifario_mtn_list'),
+    path('tarifario-mtn/criar/', tarifario_voz.TarifarioVozMTNCreateView.as_view(), name='tarifario_mtn_create'),
+    path('tarifario-mtn/<int:pk>/', tarifario_voz.TarifarioVozMTNDetailView.as_view(), name='tarifario_mtn_detail'),
+    path('tarifario-mtn/<int:pk>/editar/', tarifario_voz.TarifarioVozMTNUpdateView.as_view(), name='tarifario_mtn_update'),
+    path('tarifario-mtn/<int:pk>/excluir/', tarifario_voz.TarifarioVozMTNDeleteView.as_view(), name='tarifario_mtn_delete'),
+    path('tarifario-mtn/resumo/<int:ano>/', tarifario_voz.TarifarioVozMTNResumoView.as_view(), name='tarifario_mtn_resumo'),
 ]

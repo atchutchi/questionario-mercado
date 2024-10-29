@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Detalhes do Tarifário Orange</h2>
+        <div>
+            <a href="{% url 'tarifario_orange_update' indicador.pk %}" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a href="{% url 'tarifario_orange_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </div>
+
+    <!-- Internet USB Pré-pago -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Internet USB Pré-pago
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <p><strong>Dongle 3G:</strong> {{ indicador.dongle_3g }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Dongle 4G:</strong> {{ indicador.dongle_4g }}</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Airbox 4G:</strong> {{ indicador.airbox_4g }}</p>
+                </div>
+            </div>
+            <!-- Adicione outros campos aqui -->
+        </div>
+    </div>
+
+    <!-- Adicione outras seções do detalhe aqui -->
+
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            Informações do Registro
+        </div>
+        <div class="card-body">
+            <p><strong>Criado por:</strong> {{ indicador.criado_por }}</p>
+            <p><strong>Data de criação:</strong> {{ indicador.data_criacao|date:"d/m/Y H:i" }}</p>
+            <p><strong>Última atualização:</strong> {{ indicador.data_atualizacao|date:"d/m/Y H:i" }}</p>
+            <p><strong>Atualizado por:</strong> {{ indicador.atualizado_por }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

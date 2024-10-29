@@ -1,2 +1,3 @@
 from .estacoes_moveis import EstacoesMoveisForm
 from .internet_fixo import InternetFixoForm
+from .tarifario_voz import TarifarioVozOrangeForm, TarifarioVozMTNForm

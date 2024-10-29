@@ -71,6 +71,42 @@ body {
   max-width: 100%;
   margin-bottom: 1rem;
 }
+
+/* Dropdown submenu styles */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  display: none;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > .dropdown-item::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid transparent;
+  border-right: 0;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid;
+  float: right;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 991px) {
+  .dropdown-submenu .dropdown-menu {
+      left: 10%;
+      margin-top: 0;
+  }
+}
   
   /* from Bulma */
   .icon {
