@@ -10,48 +10,48 @@ from .models import InternetFixoIndicador
 
 @admin.register(EstacoesMoveisIndicador)
 class EstacoesMoveisIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
 
 @admin.register(TrafegoOriginadoIndicador)
 class TrafegoOriginadoIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
 
 @admin.register(TrafegoTerminadoIndicador)
 class TrafegoTerminadoIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
 
 @admin.register(TrafegoRoamingInternacionalIndicador)
 class TrafegoRoamingInternacionalIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
 
 @admin.register(LBIIndicador)
 class LBIIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
 
 @admin.register(TrafegoInternetIndicador)
 class TrafegoInternetIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'trafego_total', 'banda_larga_total', 'criado_por', 'data_criacao']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes']
+    list_display = ['operadora', 'ano', 'mes', 'trafego_total', 'banda_larga_total', 'criado_por', 'data_criacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
     readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
     fieldsets = (
         ('Informações Gerais', {
-            'fields': ('ano', 'mes')
+            'fields': ('operadora', 'ano', 'mes')
         }),
         ('Tráfego de Serviços de Internet fixo via rádio', {
             'fields': ('trafego_total', 'por_via_satelite', 'por_sistema_hertziano_fixo_terra', 'fibra_otica')
@@ -84,12 +84,12 @@ class TrafegoInternetIndicadorAdmin(admin.ModelAdmin):
 
 @admin.register(InternetFixoIndicador)
 class InternetFixoIndicadorAdmin(admin.ModelAdmin):
-    list_display = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
-    list_filter = ['ano', 'mes']
-    search_fields = ['ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
+    list_display = ['operadora', 'ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes', 'cidade_bissau', 'bafata', 'biombo']
     fieldsets = (
         ('Informações Gerais', {
-            'fields': ('ano', 'mes')
+            'fields': ('operadora', 'ano', 'mes')
         }),
         ('Número de assinantes de Internet fixo via rádio', {
             'fields': ('cidade_bissau', 'bafata', 'biombo', 'bolama_bijagos', 'cacheu', 'gabu', 'oio', 'quinara', 'tombali')
