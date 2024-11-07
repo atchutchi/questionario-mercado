@@ -21,6 +21,19 @@ class EstacoesMoveisListView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
     context_object_name = 'estacoes_moveis_list'
     permission_required = 'questionarios.view_estacoesmoveisindicador'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        operadora = self.request.GET.get('operadora')
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('-ano', '-mes')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orange_list'] = self.model.objects.filter(operadora='orange')
+        context['mtn_list'] = self.model.objects.filter(operadora='mtn')
+        return context
+
 class EstacoesMoveisUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = EstacoesMoveisIndicador
     form_class = EstacoesMoveisForm
@@ -52,11 +65,16 @@ class EstacoesMoveisResumoView(LoginRequiredMixin, PermissionRequiredMixin, List
 
     def get_queryset(self):
         ano = self.kwargs.get('ano')
-        return EstacoesMoveisIndicador.objects.filter(ano=ano).order_by('mes')
+        operadora = self.request.GET.get('operadora')
+        queryset = EstacoesMoveisIndicador.objects.filter(ano=ano)
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ano = self.kwargs.get('ano')
+        operadora = self.request.GET.get('operadora')
         indicadores = self.get_queryset()
 
         # Cálculos trimestrais
@@ -88,6 +106,7 @@ class EstacoesMoveisResumoView(LoginRequiredMixin, PermissionRequiredMixin, List
         total_estacoes_moveis_anual = sum(dado.calcular_total_estacoes_moveis() for dado in indicadores)
 
         context['ano'] = ano
+        context['operadora_selecionada'] = operadora
         context['totais_trimestrais'] = totais_trimestrais
         context['total_utilizadores_anual'] = total_utilizadores_anual
         context['total_carregamentos_anual'] = total_carregamentos_anual

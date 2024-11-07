@@ -4,6 +4,35 @@
 <div class="container mt-4">
     <h2 class="mb-4">Resumo de Tráfego Terminado - {{ ano }}</h2>
 
+    <!-- Filtro de Operadora -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Filtrar por Operadora
+        </div>
+        <div class="card-body">
+            <form method="get" class="form-inline">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <select name="operadora" class="form-control">
+                            <option value="">Todas</option>
+                            <option value="orange" {% if operadora_selecionada == 'orange' %}selected{% endif %}>Orange</option>
+                            <option value="mtn" {% if operadora_selecionada == 'mtn' %}selected{% endif %}>MTN</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if operadora_selecionada %}
+    <div class="alert alert-info">
+        Mostrando dados da operadora: {{ operadora_selecionada|upper }}
+    </div>
+    {% endif %}
+
     <h3>Totais Trimestrais</h3>
     {% for trimestre in totais_trimestrais %}
     <div class="card mb-4">
@@ -21,7 +50,7 @@
     <h3>Totais Anuais</h3>
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
-            Ano {{ ano }}
+            Ano {{ ano }}{% if operadora_selecionada %} - {{ operadora_selecionada|upper }}{% endif %}
         </div>
         <div class="card-body">
             <p><strong>Total de Chamadas:</strong> {{ total_chamadas_anual }}</p>
@@ -31,27 +60,38 @@
     </div>
 
     <h3>Detalhes Mensais</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Mês</th>
-                <th>Total de Chamadas</th>
-                <th>Total de Minutos</th>
-                <th>Total de SMS</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for indicador in indicadores %}
-            <tr>
-                <td>{{ indicador.get_mes_display }}</td>
-                <td>{{ indicador.calcular_total_chamadas }}</td>
-                <td>{{ indicador.calcular_total_minutos }}</td>
-                <td>{{ indicador.calcular_total_sms }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <th>Operadora</th>
+                    <th>Total de Chamadas</th>
+                    <th>Total de Minutos</th>
+                    <th>Total de SMS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for indicador in indicadores %}
+                <tr>
+                    <td>{{ indicador.get_mes_display }}</td>
+                    <td>{{ indicador.get_operadora_display }}</td>
+                    <td>{{ indicador.calcular_total_chamadas }}</td>
+                    <td>{{ indicador.calcular_total_minutos }}</td>
+                    <td>{{ indicador.calcular_total_sms }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{% url 'trafego_terminado_list' %}" class="btn btn-secondary">Voltar para a Lista</a>
+    <div class="mt-4 mb-4">
+        <a href="{% url 'trafego_terminado_list' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar para a Lista
+        </a>
+        <button class="btn btn-primary" onclick="window.print()">
+            <i class="fas fa-print"></i> Imprimir Relatório
+        </button>
+    </div>
 </div>
 {% endblock %}

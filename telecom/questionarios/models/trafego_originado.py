@@ -95,4 +95,4 @@ class TrafegoOriginadoIndicador(IndicadorBase):
         return f"Tráfego Originado - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')

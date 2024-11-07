@@ -13,6 +13,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Operadora</th>
                 <th>Ano</th>
                 <th>Mês</th>
                 <th>Total Utilizadores</th>
@@ -22,6 +23,7 @@
         <tbody>
             {% for indicador in estacoes_moveis_list %}
             <tr>
+                <td>{{ indicador.get_operadora_display }}</td>
                 <td>{{ indicador.ano }}</td>
                 <td>{{ indicador.mes }}</td>
                 <td>{{ indicador.numero_utilizadores }}</td>

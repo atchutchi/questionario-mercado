@@ -8,6 +8,7 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
+                    <th>Operadora</th>
                     <th>Ano</th>
                     <th>Mês</th>
                     <th>Tráfego de Dados 3G</th>
@@ -21,6 +22,7 @@
             <tbody>
                 {% for indicador in trafego_originado_list %}
                 <tr>
+                    <td>{{ indicador.get_operadora_display }}</td>
                     <td>{{ indicador.ano }}</td>
                     <td>{{ indicador.mes }}</td>
                     <td>{{ indicador.trafego_dados_3g_upgrade }} Mbit/s</td>

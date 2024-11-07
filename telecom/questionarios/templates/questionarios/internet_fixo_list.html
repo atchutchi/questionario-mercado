@@ -7,6 +7,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Operadora</th>
                 <th>Ano</th>
                 <th>Mês</th>
                 <th>Total Assinantes</th>
@@ -16,8 +17,9 @@
         <tbody>
             {% for indicador in internet_fixo_list %}
             <tr>
+                <td>{{ indicador.get_operadora_display }}</td>
                 <td>{{ indicador.ano }}</td>
-                <td>{{ indicador.get_mes_display }}</td>
+                <td>{{ indicador.mes }}</td>
                 <td>{{ indicador.calcular_total_assinantes_radio }}</td>
                 <td>
                     <a href="{% url 'internet_fixo_detail' indicador.pk %}" class="btn btn-info btn-sm">Detalhes</a>

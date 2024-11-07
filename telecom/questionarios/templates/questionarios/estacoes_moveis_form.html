@@ -17,11 +17,15 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
+                        {{ form.operadora.label_tag }}
+                        {{ form.operadora }}
+                    </div>
+                    <div class="col-md-4 mb-3">
                         {{ form.ano.label_tag }}
                         {{ form.ano }}
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         {{ form.mes.label_tag }}
                         {{ form.mes }}
                     </div>

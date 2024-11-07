@@ -50,7 +50,7 @@ class TrafegoTerminadoIndicador(IndicadorBase):
         return f"Tráfego Terminado - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')
 
     def calcular_total_chamadas(self):
         return (

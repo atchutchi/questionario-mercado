@@ -67,4 +67,4 @@ class EstacoesMoveisIndicador(IndicadorBase):
         return f"Estações Móveis e Mobile Money - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')

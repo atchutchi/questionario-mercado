@@ -21,6 +21,13 @@ class TrafegoTerminadoListView(LoginRequiredMixin, PermissionRequiredMixin, List
     context_object_name = 'trafego_terminado_list'
     permission_required = 'questionarios.view_trafegoterminadoindicador'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        operadora = self.request.GET.get('operadora')
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('-ano', '-mes')
+
 class TrafegoTerminadoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = TrafegoTerminadoIndicador
     form_class = TrafegoTerminadoForm
@@ -52,11 +59,16 @@ class TrafegoTerminadoResumoView(LoginRequiredMixin, PermissionRequiredMixin, Li
 
     def get_queryset(self):
         ano = self.kwargs.get('ano')
-        return TrafegoTerminadoIndicador.objects.filter(ano=ano).order_by('mes')
+        operadora = self.request.GET.get('operadora')
+        queryset = self.model.objects.filter(ano=ano)
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ano = self.kwargs.get('ano')
+        operadora = self.request.GET.get('operadora')
         indicadores = self.get_queryset()
 
         # Cálculos trimestrais
@@ -82,6 +94,7 @@ class TrafegoTerminadoResumoView(LoginRequiredMixin, PermissionRequiredMixin, Li
         total_sms_anual = sum(dado.calcular_total_sms() for dado in indicadores)
 
         context['ano'] = ano
+        context['operadora_selecionada'] = operadora
         context['totais_trimestrais'] = totais_trimestrais
         context['total_chamadas_anual'] = total_chamadas_anual
         context['total_minutos_anual'] = total_minutos_anual

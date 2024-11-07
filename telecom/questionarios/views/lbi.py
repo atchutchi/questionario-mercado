@@ -21,6 +21,13 @@ class LBIListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'lbi_list'
     permission_required = 'questionarios.view_lbiindicador'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        operadora = self.request.GET.get('operadora')
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('-ano', '-mes')
+
 class LBIUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = LBIIndicador
     form_class = LBIForm
@@ -52,11 +59,16 @@ class LBIResumoView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         ano = self.kwargs.get('ano')
-        return LBIIndicador.objects.filter(ano=ano).order_by('mes')
+        operadora = self.request.GET.get('operadora')
+        queryset = self.model.objects.filter(ano=ano)
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ano = self.kwargs.get('ano')
+        operadora = self.request.GET.get('operadora')
         indicadores = self.get_queryset()
 
         # Cálculos trimestrais
@@ -81,6 +93,7 @@ class LBIResumoView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         total_down_anual = sum(dado.calcular_total_down() for dado in indicadores)
         total_up_anual = sum(dado.calcular_total_up() for dado in indicadores)
 
+        context['operadora_selecionada'] = operadora
         context['ano'] = ano
         context['totais_trimestrais'] = totais_trimestrais
         context['total_tecnologia_anual'] = total_tecnologia_anual

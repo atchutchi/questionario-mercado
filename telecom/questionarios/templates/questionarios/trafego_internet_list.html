@@ -7,6 +7,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Operadora</th>
                 <th>Ano</th>
                 <th>Mês</th>
                 <th>Tráfego Total</th>
@@ -17,6 +18,7 @@
         <tbody>
             {% for indicador in trafego_internet_list %}
             <tr>
+                <td>{{ indicador.get_operadora_display }}</td>
                 <td>{{ indicador.ano }}</td>
                 <td>{{ indicador.get_mes_display }}</td>
                 <td>{{ indicador.trafego_total }}</td>

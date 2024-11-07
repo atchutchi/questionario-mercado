@@ -4,19 +4,12 @@ from ..models.lbi import LBIIndicador
 class LBIForm(forms.ModelForm):
     class Meta:
         model = LBIIndicador
+        fields = '__all__'
         exclude = ['criado_por', 'atualizado_por', 'data_criacao', 'data_atualizacao']
-        widgets = {
-            'ano': forms.NumberInput(attrs={'class': 'form-control'}),
-            'mes': forms.Select(attrs={'class': 'form-control'}),
-            'satelite': forms.NumberInput(attrs={'class': 'form-control'}),
-            'cabo_fibra_optica': forms.NumberInput(attrs={'class': 'form-control'}),
-            'feixe_hertziano': forms.NumberInput(attrs={'class': 'form-control'}),
-            'disponivel_nominal_down': forms.NumberInput(attrs={'class': 'form-control'}),
-            'instalada_equipada_down': forms.NumberInput(attrs={'class': 'form-control'}),
-            'contratada_down': forms.NumberInput(attrs={'class': 'form-control'}),
-            'utilizada_down': forms.NumberInput(attrs={'class': 'form-control'}),
-            'disponivel_nominal_up': forms.NumberInput(attrs={'class': 'form-control'}),
-            'instalada_equipada_up': forms.NumberInput(attrs={'class': 'form-control'}),
-            'contratada_up': forms.NumberInput(attrs={'class': 'form-control'}),
-            'utilizada_up': forms.NumberInput(attrs={'class': 'form-control'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Adiciona a classe form-control para todos os campos
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, (forms.TextInput, forms.NumberInput, forms.Select)):
+                field.widget.attrs['class'] = 'form-control'

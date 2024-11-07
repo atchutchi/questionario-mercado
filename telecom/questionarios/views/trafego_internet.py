@@ -21,6 +21,13 @@ class TrafegoInternetListView(LoginRequiredMixin, PermissionRequiredMixin, ListV
     context_object_name = 'trafego_internet_list'
     permission_required = 'questionarios.view_trafegointernettindicador'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        operadora = self.request.GET.get('operadora')
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('-ano', '-mes')
+
 class TrafegoInternetUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = TrafegoInternetIndicador
     form_class = TrafegoInternetForm
@@ -52,10 +59,15 @@ class TrafegoInternetResumoView(LoginRequiredMixin, PermissionRequiredMixin, Lis
 
     def get_queryset(self):
         ano = self.kwargs.get('ano')
-        return TrafegoInternetIndicador.objects.filter(ano=ano).order_by('mes')
+        operadora = self.request.GET.get('operadora')
+        queryset = self.model.objects.filter(ano=ano)
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['operadora_selecionada'] = self.request.GET.get('operadora')
         ano = self.kwargs.get('ano')
         indicadores = self.get_queryset()
 

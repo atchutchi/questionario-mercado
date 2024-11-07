@@ -54,7 +54,7 @@ class TrafegoInternetIndicador(IndicadorBase):
         return f"Tráfego de Internet - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')
 
     def calcular_total_trafego(self):
         return self.trafego_total

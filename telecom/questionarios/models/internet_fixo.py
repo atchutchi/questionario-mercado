@@ -62,6 +62,6 @@ class InternetFixoIndicador(IndicadorBase):
         return f"Internet Fixo - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')
         verbose_name = "Indicador de Internet Fixo"
         verbose_name_plural = "Indicadores de Internet Fixo"

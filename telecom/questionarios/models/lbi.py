@@ -29,7 +29,7 @@ class LBIIndicador(IndicadorBase):
         return f"LBI - {self.ano}/{self.mes}"
 
     class Meta:
-        unique_together = ('ano', 'mes')
+        unique_together = ('ano', 'mes', 'operadora')
 
     def calcular_total_tecnologia(self):
         return (self.satelite or 0) + self.cabo_fibra_optica + self.feixe_hertziano

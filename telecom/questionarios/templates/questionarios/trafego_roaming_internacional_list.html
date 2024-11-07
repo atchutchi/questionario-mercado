@@ -7,6 +7,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Operadora</th>
                 <th>Ano</th>
                 <th>Mês</th>
                 <th>Chamadas IN</th>
@@ -17,8 +18,9 @@
         <tbody>
             {% for indicador in trafego_roaming_internacional_list %}
             <tr>
+                <td>{{ indicador.get_operadora_display }}</td>
                 <td>{{ indicador.ano }}</td>
-                <td>{{ indicador.get_mes_display }}</td>
+                <td>{{ indicador.mes }}</td>
                 <td>{{ indicador.chamadas_originadas_rede }}</td>
                 <td>{{ indicador.chamadas_originadas_operador_roaming }}</td>
                 <td>
@@ -29,7 +31,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">Nenhum indicador cadastrado.</td>
+                <td colspan="6">Nenhum indicador cadastrado.</td>
             </tr>
             {% endfor %}
         </tbody>

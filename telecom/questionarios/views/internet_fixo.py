@@ -21,6 +21,13 @@ class InternetFixoListView(LoginRequiredMixin, PermissionRequiredMixin, ListView
     context_object_name = 'internet_fixo_list'
     permission_required = 'questionarios.view_internetfixoindicador'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        operadora = self.request.GET.get('operadora')
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('-ano', '-mes')
+
 class InternetFixoUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = InternetFixoIndicador
     form_class = InternetFixoForm
@@ -48,11 +55,16 @@ class InternetFixoResumoView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
 
     def get_queryset(self):
         ano = self.kwargs.get('ano')
-        return InternetFixoIndicador.objects.filter(ano=ano).order_by('mes')
+        operadora = self.request.GET.get('operadora')
+        queryset = self.model.objects.filter(ano=ano)
+        if operadora:
+            queryset = queryset.filter(operadora=operadora)
+        return queryset.order_by('mes')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ano = self.kwargs.get('ano')
+        operadora = self.request.GET.get('operadora')
         indicadores = self.get_queryset()
 
         # Cálculos trimestrais
@@ -80,6 +92,7 @@ class InternetFixoResumoView(LoginRequiredMixin, PermissionRequiredMixin, ListVi
         total_banda_larga_anual = sum(dado.calcular_total_banda_larga() for dado in indicadores)
         total_assinantes_categoria_anual = sum(dado.calcular_total_assinantes_categoria() for dado in indicadores)
 
+        context['operadora_selecionada'] = operadora
         context['ano'] = ano
         context['totais_trimestrais'] = totais_trimestrais
         context['total_assinantes_radio_anual'] = total_assinantes_radio_anual

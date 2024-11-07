@@ -11,13 +11,14 @@
 
     {% if tarifario_orange_list %}
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Ano</th>
                     <th>Mês</th>
                     <th>Internet Pré-pago</th>
                     <th>Internet Residencial</th>
+                    <th>Total Passes</th>
                     <th>Última Atualização</th>
                     <th>Ações</th>
                 </tr>
@@ -27,8 +28,15 @@
                 <tr>
                     <td>{{ tarifario.ano }}</td>
                     <td>{{ tarifario.get_mes_display }}</td>
-                    <td>{{ tarifario.dongle_3g }}</td>
-                    <td>{{ tarifario.casa_zen_2mbits_adesao }}</td>
+                    <td>
+                        Dongle 3G: {{ tarifario.dongle_3g }}<br>
+                        Dongle 4G: {{ tarifario.dongle_4g }}
+                    </td>
+                    <td>
+                        Casa Zen: {{ tarifario.casa_zen_2mbits_mensal }}<br>
+                        Casa Conforto: {{ tarifario.casa_conforto_4mbits_mensal }}
+                    </td>
+                    <td>{{ tarifario.pass_ilimite_1h }}</td>
                     <td>{{ tarifario.data_atualizacao|date:"d/m/Y H:i" }}</td>
                     <td>
                         <div class="btn-group" role="group">
@@ -53,5 +61,35 @@
         Nenhum tarifário cadastrado.
     </div>
     {% endif %}
+
+    <!-- Seletor de Anos para Resumo -->
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            Visualizar Resumo Anual
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="form-control" id="anoSelect">
+                        {% for ano in anos_disponiveis %}
+                        <option value="{{ ano }}">{{ ano }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success" onclick="verResumo()">
+                        <i class="fas fa-chart-bar"></i> Ver Resumo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+function verResumo() {
+    const ano = document.getElementById('anoSelect').value;
+    window.location.href = `{% url 'tarifario_orange_resumo' 0 %}`.replace('0', ano);
+}
+</script>
 {% endblock %}
