@@ -8,6 +8,8 @@ from .models.lbi import LBIIndicador
 from .models.trafego_internet import TrafegoInternetIndicador
 from .models.internet_fixo import InternetFixoIndicador
 from .models.receitas import ReceitasIndicador
+from .models.emprego import EmpregoIndicador
+
 
 @admin.register(EstacoesMoveisIndicador)
 class EstacoesMoveisIndicadorAdmin(admin.ModelAdmin):
@@ -177,6 +179,56 @@ class ReceitasIndicadorAdmin(admin.ModelAdmin):
                 'receitas_servicos_especiais',
                 'outras_receitas_grossistas'
             )
+        }),
+        ('Metadados', {
+            'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.criado_por = request.user
+        obj.atualizado_por = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # Editing an existing object
+            return self.readonly_fields + ('ano', 'mes', 'operadora')
+        return self.readonly_fields
+
+
+@admin.register(EmpregoIndicador)
+class EmpregoIndicadorAdmin(admin.ModelAdmin):
+    list_display = ['operadora', 'ano', 'mes', 
+                   'emprego_direto_total', 
+                   'nacionais_total',
+                   'emprego_indireto',
+                   'calcular_total_geral',
+                   'criado_por', 'data_criacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
+    readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+    
+    fieldsets = (
+        ('Informações Gerais', {
+            'fields': ('operadora', 'ano', 'mes')
+        }),
+        ('Emprego Direto', {
+            'fields': ('emprego_direto_total',)
+        }),
+        ('Nacionais', {
+            'fields': (
+                'nacionais_total',
+                'nacionais_homem',
+                'nacionais_mulher'
+            )
+        }),
+        ('Emprego Indireto', {
+            'fields': ('emprego_indireto',)
         }),
         ('Metadados', {
             'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao'),

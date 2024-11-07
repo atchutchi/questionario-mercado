@@ -7,7 +7,8 @@ from .views import (
     lbi, 
     trafego_internet, 
     internet_fixo, 
-    tarifario_voz
+    tarifario_voz,
+    receitas
 )
 
 urlpatterns = [
@@ -81,4 +82,12 @@ urlpatterns = [
     path('tarifario-mtn/<int:pk>/editar/', tarifario_voz.TarifarioVozMTNUpdateView.as_view(), name='tarifario_mtn_update'),
     path('tarifario-mtn/<int:pk>/excluir/', tarifario_voz.TarifarioVozMTNDeleteView.as_view(), name='tarifario_mtn_delete'),
     path('tarifario-mtn/resumo/<int:ano>/', tarifario_voz.TarifarioVozMTNResumoView.as_view(), name='tarifario_mtn_resumo'),
+
+    # Receitas
+    path('receitas/', receitas.ReceitasListView.as_view(), name='receitas_list'),
+    path('receitas/criar/', receitas.ReceitasCreateView.as_view(), name='receitas_create'),
+    path('receitas/<int:pk>/', receitas.ReceitasDetailView.as_view(), name='receitas_detail'),
+    path('receitas/<int:pk>/editar/', receitas.ReceitasUpdateView.as_view(), name='receitas_update'),
+    path('receitas/<int:pk>/excluir/', receitas.ReceitasDeleteView.as_view(), name='receitas_delete'),
+    path('receitas/resumo/<int:ano>/', receitas.ReceitasResumoView.as_view(), name='receitas_resumo'),
 ]
