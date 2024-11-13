@@ -1,9 +1,19 @@
-{% extends "account/email/base_message.txt" %}
 {% load account %}
+{% user_display user as user_display %}
 {% load i18n %}
+{% autoescape off %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+Olá,
 
-{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktranslate with site_name=current_site.name site_domain=current_site.domain %}You're receiving this email because user {{ user_display }} has given your email address to register an account on {{ site_domain }}.{% endblocktranslate %}
+Você está recebendo este e-mail porque o usuário {{ user_display }} forneceu seu endereço de e-mail para registrar uma conta no Observatório do Mercado de Telecomunicações da ARN.
 
-{% if code %}{% blocktranslate %}Your email verification code is listed below. Please enter it in your open browser window.{% endblocktranslate %}
+Para confirmar que este é seu endereço de e-mail, por favor clique no link abaixo:
 
-{{ code }}{% else %}{% blocktranslate %}To confirm this is correct, go to {{ activate_url }}{% endblocktranslate %}{% endif %}{% endautoescape %}{% endblock content %}
+{{ activate_url }}
+
+Se você não solicitou este e-mail, pode ignorá-lo com segurança.
+
+Atenciosamente,
+Equipe do Observatório ARN
+{% endblocktrans %}
+{% endautoescape %}
