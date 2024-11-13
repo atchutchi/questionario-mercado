@@ -8,7 +8,9 @@ from .views import (
     trafego_internet, 
     internet_fixo, 
     tarifario_voz,
-    receitas
+    receitas,
+    emprego,
+    investimento
 )
 
 urlpatterns = [
@@ -90,4 +92,21 @@ urlpatterns = [
     path('receitas/<int:pk>/editar/', receitas.ReceitasUpdateView.as_view(), name='receitas_update'),
     path('receitas/<int:pk>/excluir/', receitas.ReceitasDeleteView.as_view(), name='receitas_delete'),
     path('receitas/resumo/<int:ano>/', receitas.ReceitasResumoView.as_view(), name='receitas_resumo'),
+
+    # Emprego
+    path('emprego/', emprego.EmpregoListView.as_view(), name='emprego_list'),
+    path('emprego/criar/', emprego.EmpregoCreateView.as_view(), name='emprego_create'),
+    path('emprego/<int:pk>/', emprego.EmpregoDetailView.as_view(), name='emprego_detail'),
+    path('emprego/<int:pk>/editar/', emprego.EmpregoUpdateView.as_view(), name='emprego_update'),
+    path('emprego/<int:pk>/excluir/', emprego.EmpregoDeleteView.as_view(), name='emprego_delete'),
+    path('emprego/resumo/<int:ano>/', emprego.EmpregoResumoView.as_view(), name='emprego_resumo'),
+
+    # Investimento
+    path('investimento/', investimento.InvestimentoListView.as_view(), name='investimento_list'),
+    path('investimento/criar/', investimento.InvestimentoCreateView.as_view(), name='investimento_create'),
+    path('investimento/<int:pk>/', investimento.InvestimentoDetailView.as_view(), name='investimento_detail'),
+    path('investimento/<int:pk>/editar/', investimento.InvestimentoUpdateView.as_view(), name='investimento_update'),
+    path('investimento/<int:pk>/excluir/', investimento.InvestimentoDeleteView.as_view(), name='investimento_delete'),
+    path('investimento/resumo/<int:ano>/', investimento.InvestimentoResumoView.as_view(), name='investimento_resumo'),
+
 ]

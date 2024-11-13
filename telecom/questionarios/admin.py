@@ -9,6 +9,7 @@ from .models.trafego_internet import TrafegoInternetIndicador
 from .models.internet_fixo import InternetFixoIndicador
 from .models.receitas import ReceitasIndicador
 from .models.emprego import EmpregoIndicador
+from .models.investimento import InvestimentoIndicador
 
 
 @admin.register(EstacoesMoveisIndicador)
@@ -249,3 +250,64 @@ class EmpregoIndicadorAdmin(admin.ModelAdmin):
         if obj:  # Editing an existing object
             return self.readonly_fields + ('ano', 'mes', 'operadora')
         return self.readonly_fields
+
+
+@admin.register(InvestimentoIndicador)
+class InvestimentoIndicadorAdmin(admin.ModelAdmin):
+    list_display = ['operadora', 'ano', 'mes', 
+                    'calcular_total_corporeo',
+                    'calcular_total_incorporeo',
+                    'calcular_total_geral',
+                    'criado_por', 'data_criacao']
+    list_filter = ['operadora', 'ano', 'mes']
+    search_fields = ['operadora', 'ano', 'mes']
+    readonly_fields = ['criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao']
+
+    fieldsets = (
+        ('Informações Gerais', {
+            'fields': ('operadora', 'ano', 'mes')
+        }),
+        ('Investimento Corpóreo', {
+            'fields': (
+                'servicos_telecomunicacoes',
+                'servicos_internet'
+            ),
+            'description': 'Investimentos em ativos físicos tangíveis'
+        }),
+        ('Investimento Incorpóreo', {
+            'fields': (
+                'servicos_telecomunicacoes_incorporeo',
+                'servicos_internet_incorporeo'
+            ),
+            'description': 'Investimentos em ativos intangíveis'
+        }),
+        ('Outros Investimentos', {
+            'fields': ('outros_investimentos',),
+            'description': 'Campos adicionais de investimentos',
+            'classes': ('collapse',)
+        }),
+        ('Metadados', {
+            'fields': ('criado_por', 'data_criacao', 'atualizado_por', 'data_atualizacao'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.criado_por = request.user
+        obj.atualizado_por = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # Editing an existing object
+            return self.readonly_fields + ('ano', 'mes', 'operadora')
+        return self.readonly_fields
+
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        field = super().formfield_for_dbfield(db_field, request, **kwargs)
+        if db_field.name == 'outros_investimentos':
+            field.widget = forms.Textarea(attrs={'rows': 4})
+        return field
