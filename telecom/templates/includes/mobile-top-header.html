@@ -1,22 +1,6 @@
-{% load static %}
-
+{# templates/includes/mobile-top-header.html #}
 <ul class="list-inline text-center w-100 my-3">
-    <li class="list-inline-item">
-        <a class="text-black nav-link d-block d-lg-none" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-search fa-lg"></i>
-            <p class="my-0">Search</p>
-        </a>
-        <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
-            <form class="form" method="GET" action="">
-                <div class="input-group w-100">
-                    <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
-                    <button class="btn btn-black border border-black rounded-0" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </li>
+    <!-- Search item permanece igual -->
     <li class="list-inline-item dropdown">
         <a class="text-black nav-link d-block d-lg-none" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user fa-lg"></i>
@@ -25,13 +9,20 @@
         <div class="dropdown-menu border-0" aria-labelledby="user-options">
             {% if request.user.is_authenticated %}
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'admin:index' %}" class="dropdown-item">Gestão dos Questionários</a>
+                    <a href="{% url 'usuarios:admin_dashboard' %}" class="dropdown-item">Dashboard Admin</a>
+                    <a href="{% url 'usuarios:pending_approval_list' %}" class="dropdown-item">Aprovações</a>
+                    <a href="{% url 'usuarios:operator_list' %}" class="dropdown-item">Operadores</a>
                 {% endif %}
-                <a href="{% url 'account_email' %}" class="dropdown-item">Meu Perfil</a>
-                <a href="{% url 'account_logout' %}" class="dropdown-item">Sair</a>
+                <a href="{% url 'usuarios:profile_view' %}" class="dropdown-item">Meu Perfil</a>
+                <a href="{% url 'usuarios:profile_edit' %}" class="dropdown-item">Editar Perfil</a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'usuarios:change_password' %}" class="dropdown-item">Alterar Senha</a>
+                <a href="{% url 'usuarios:change_email' %}" class="dropdown-item">Alterar Email</a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'usuarios:help_center' %}" class="dropdown-item">Ajuda</a>
+                <a href="{% url 'usuarios:logout' %}" class="dropdown-item">Sair</a>
             {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item">Registrar</a>
-                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                <a href="{% url 'usuarios:login' %}" class="dropdown-item">Login</a>
             {% endif %}
         </div>
     </li>

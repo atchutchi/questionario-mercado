@@ -2,6 +2,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_title %} - Área do Usuário{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
 {% endblock %}
@@ -9,20 +11,26 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row">
+        <!-- Sidebar para administradores -->
         {% if user.is_superuser %}
             <div class="col-md-3">
                 {% include 'usuarios/_admin_sidebar.html' %}
             </div>
+            <div class="col-md-9">
+                {% include 'usuarios/_messages.html' %}
+                {% block usuarios_content %}{% endblock %}
+            </div>
+        {% else %}
+            <div class="col-12">
+                {% include 'usuarios/_messages.html' %}
+                {% block usuarios_content %}{% endblock %}
+            </div>
         {% endif %}
-        
-        <div class="col">
-            {% include 'usuarios/_messages.html' %}
-            {% block usuarios_content %}{% endblock %}
-        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
+{{ block.super }}
 <script src="{% static 'usuarios/js/usuarios.js' %}"></script>
 {% endblock %}

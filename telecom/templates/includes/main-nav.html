@@ -1,3 +1,4 @@
+{# templates/includes/main-nav.html #}
 {% load static %}
 
 <div class="collapse navbar-collapse justify-content-center" id="main-nav">
@@ -5,6 +6,21 @@
         <li class="nav-item">
             <a class="nav-link text-black" href="{% url 'home' %}">Mercado de Telefonia Móvel</a>
         </li>
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black dropdown-toggle" href="#" id="admin-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administração
+                </a>
+                <div class="dropdown-menu border-0" aria-labelledby="admin-dropdown">
+                    <a href="{% url 'usuarios:admin_dashboard' %}" class="dropdown-item">Dashboard Admin</a>
+                    <a href="{% url 'usuarios:pending_approval_list' %}" class="dropdown-item">Aprovações Pendentes</a>
+                    <a href="{% url 'usuarios:operator_list' %}" class="dropdown-item">Operadores</a>
+                    <a href="{% url 'usuarios:permission_list' %}" class="dropdown-item">Permissões</a>
+                </div>
+            </li>
+            {% endif %}
+        {% endif %}
         <li class="nav-item dropdown">
             <a class="nav-link text-black dropdown-toggle" href="#" id="questionarios-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Questionários

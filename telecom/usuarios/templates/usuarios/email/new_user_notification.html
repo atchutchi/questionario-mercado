@@ -1,0 +1,48 @@
+{# usuarios/templates/usuarios/email/new_user_notification.html #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="background-color: #007bff; color: white; padding: 20px; text-align: center; border-radius: 5px;">
+        <h1 style="margin: 0;">Novo Usuário Registrado</h1>
+    </div>
+    
+    <div style="padding: 20px; background-color: #f8f9fa; border-radius: 5px; margin-top: 20px;">
+        <p>Olá Administrador,</p>
+        
+        <p>Um novo usuário se registrou no sistema e está aguardando aprovação.</p>
+        
+        <p><strong>Detalhes do usuário:</strong></p>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;"><strong>Nome:</strong> {{ user.get_full_name }}</li>
+            <li style="margin-bottom: 8px;"><strong>Email:</strong> {{ user.email }}</li>
+            <li style="margin-bottom: 8px;"><strong>Empresa:</strong> {{ user.company }}</li>
+            <li style="margin-bottom: 8px;"><strong>Cargo:</strong> {{ user.position }}</li>
+            <li style="margin-bottom: 8px;"><strong>Tipo:</strong> 
+                {% if user.is_operator %}
+                    Operador ({{ user.get_operator_type_display }})
+                {% else %}
+                    Usuário Regular
+                {% endif %}
+            </li>
+            <li style="margin-bottom: 8px;"><strong>Data do registro:</strong> {{ user.date_joined|date:"d/m/Y H:i" }}</li>
+        </ul>
+        
+        <p style="margin-top: 20px;">Por favor, acesse o painel administrativo para revisar e aprovar este usuário.</p>
+        
+        <p style="text-align: center; margin-top: 30px;">
+            <a href="{{ admin_url }}" 
+               style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                Acessar Painel Administrativo
+            </a>
+        </p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #6c757d;">
+        <p>Este é um email automático, por favor não responda.</p>
+        <p>© {% now "Y" %} Observatório de Telecomunicações. Todos os direitos reservados.</p>
+    </div>
+</body>
+</html>

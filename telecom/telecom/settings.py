@@ -133,6 +133,14 @@ else:
     DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
     SERVER_EMAIL = os.environ.get('SERVER_EMAIL', EMAIL_HOST_USER)
 
+
+ACCOUNT_RATE_LIMITS = {
+    # 5 tentativas de login por 5 minutos
+    'login_failed': '5/5m',
+    # 3 minutos entre tentativas de confirmação de email
+    'confirm_email': '3/m',
+}
+
 # Allauth email settings
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -143,13 +151,20 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
-ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180  # 3 minutos entre tentativas
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300  # 5 minutos
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+# Adicione estas configurações adicionais do allauth
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'  # Para URLs seguras em emails
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'account_login'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+ACCOUNT_PASSWORD_MIN_LENGTH = 8
+ACCOUNT_SIGNUP_FORM_CLASS = None
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+
 
 # Login/Logout URLs
 LOGIN_URL = '/accounts/login/'
