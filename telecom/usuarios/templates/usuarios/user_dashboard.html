@@ -1,0 +1,154 @@
+{# usuarios/templates/usuarios/user_dashboard.html #}
+{% extends "usuarios/base_usuarios.html" %}
+{% load static %}
+
+{% block usuarios_content %}
+<div class="row">
+   <!-- Informações do Usuário -->
+   <div class="col-md-4 mb-4">
+       <div class="card">
+           <div class="card-header bg-primary text-white">
+               <h5 class="mb-0">Meu Perfil</h5>
+           </div>
+           <div class="card-body">
+               <div class="text-center mb-3">
+                   <div class="avatar-circle mb-3">
+                       <span class="initials">{{ user.get_initials }}</span>
+                   </div>
+                   <h4>{{ user.get_full_name }}</h4>
+                   <p class="text-muted">{{ user.email }}</p>
+               </div>
+               <hr>
+               <dl class="row mb-0">
+                   <dt class="col-sm-6">Último Acesso:</dt>
+                   <dd class="col-sm-6">{{ user_info.last_login|date:"d/m/Y H:i" }}</dd>
+                   
+                   <dt class="col-sm-6">Membro desde:</dt>
+                   <dd class="col-sm-6">{{ user_info.member_since|date:"d/m/Y" }}</dd>
+               </dl>
+           </div>
+       </div>
+   </div>
+
+   <!-- Estatísticas e Atividades -->
+   <div class="col-md-8 mb-4">
+       <div class="card">
+           <div class="card-header bg-primary text-white">
+               <h5 class="mb-0">Atividades Recentes</h5>
+           </div>
+           <div class="card-body">
+               <div class="activity-timeline">
+                   {% if recent_activities %}
+                       {% for activity in recent_activities %}
+                       <div class="activity-item">
+                           <div class="activity-content">
+                               <div class="activity-time">{{ activity.timestamp|date:"d/m/Y H:i" }}</div>
+                               <div class="activity-text">{{ activity.description }}</div>
+                           </div>
+                       </div>
+                       {% endfor %}
+                   {% else %}
+                       <p class="text-muted">Nenhuma atividade recente.</p>
+                   {% endif %}
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <!-- Informações do Operador (se aplicável) -->
+   {% if user.is_operator %}
+   <div class="col-md-6 mb-4">
+       <div class="card">
+           <div class="card-header bg-primary text-white">
+               <h5 class="mb-0">Informações do Operador</h5>
+           </div>
+           <div class="card-body">
+               <dl class="row mb-0">
+                   <dt class="col-sm-6">Status da Licença:</dt>
+                   <dd class="col-sm-6">
+                       {% if operator_info.license_status %}
+                           <span class="badge bg-success">Válida</span>
+                       {% else %}
+                           <span class="badge bg-danger">Vencida</span>
+                       {% endif %}
+                   </dd>
+
+                   <dt class="col-sm-6">Validade:</dt>
+                   <dd class="col-sm-6">{{ operator_info.license_expiry|date:"d/m/Y" }}</dd>
+
+                   <dt class="col-sm-6">Áreas de Serviço:</dt>
+                   <dd class="col-sm-6">{{ operator_info.service_areas }}</dd>
+               </dl>
+           </div>
+       </div>
+   </div>
+   {% endif %}
+
+   <!-- Permissões Ativas -->
+   <div class="col-md-6 mb-4">
+       <div class="card">
+           <div class="card-header bg-primary text-white">
+               <h5 class="mb-0">Minhas Permissões</h5>
+           </div>
+           <div class="card-body">
+               {% if user_info.permissions %}
+                   <ul class="list-group">
+                       {% for permission in user_info.permissions %}
+                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                           {{ permission.get_permission_name_display }}
+                           {% if permission.expires_at %}
+                               <span class="badge bg-info">
+                                   Expira: {{ permission.expires_at|date:"d/m/Y" }}
+                               </span>
+                           {% endif %}
+                       </li>
+                       {% endfor %}
+                   </ul>
+               {% else %}
+                   <p class="text-muted">Nenhuma permissão ativa.</p>
+               {% endif %}
+           </div>
+       </div>
+   </div>
+
+   <!-- Ações Rápidas -->
+   <div class="col-12">
+       <div class="card">
+           <div class="card-header bg-primary text-white">
+               <h5 class="mb-0">Ações Rápidas</h5>
+           </div>
+           <div class="card-body">
+               <div class="row g-3">
+                   <div class="col-md-3">
+                       <a href="{% url 'profile_edit' %}" class="btn btn-outline-primary w-100">
+                           <i class="fas fa-user-edit"></i> Editar Perfil
+                       </a>
+                   </div>
+                   {% if user.is_operator %}
+                   <div class="col-md-3">
+                       <a href="{% url 'operator_data' %}" class="btn btn-outline-primary w-100">
+                           <i class="fas fa-chart-line"></i> Dados do Operador
+                       </a>
+                   </div>
+                   {% endif %}
+                   <div class="col-md-3">
+                       <a href="{% url 'change_password' %}" class="btn btn-outline-primary w-100">
+                           <i class="fas fa-key"></i> Alterar Senha
+                       </a>
+                   </div>
+                   <div class="col-md-3">
+                       <a href="{% url 'help_center' %}" class="btn btn-outline-primary w-100">
+                           <i class="fas fa-question-circle"></i> Central de Ajuda
+                       </a>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'usuarios/css/dashboard.css' %}">
+{% endblock %}

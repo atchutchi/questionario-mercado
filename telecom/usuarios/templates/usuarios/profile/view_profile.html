@@ -1,0 +1,106 @@
+{# usuarios/templates/usuarios/profile/view_profile.html #}
+{% extends "usuarios/base_usuarios.html" %}
+
+{% block usuarios_content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Perfil do Usuário</h3>
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Nome Completo</dt>
+                    <dd class="col-sm-8">{{ user_profile.get_full_name }}</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">{{ user_profile.email }}</dd>
+
+                    <dt class="col-sm-4">Empresa</dt>
+                    <dd class="col-sm-8">{{ user_profile.company }}</dd>
+
+                    <dt class="col-sm-4">Cargo</dt>
+                    <dd class="col-sm-8">{{ user_profile.position }}</dd>
+
+                    <dt class="col-sm-4">Telefone</dt>
+                    <dd class="col-sm-8">{{ user_profile.phone_number }}</dd>
+
+                    <dt class="col-sm-4">Tipo de Usuário</dt>
+                    <dd class="col-sm-8">
+                        {% if user_profile.is_operator %}
+                            <span class="badge bg-primary">{{ user_profile.get_operator_type_display }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Usuário Regular</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-4">Membro desde</dt>
+                    <dd class="col-sm-8">{{ user_profile.date_joined|date:"d/m/Y" }}</dd>
+
+                    <dt class="col-sm-4">Último acesso</dt>
+                    <dd class="col-sm-8">{{ user_profile.last_login|date:"d/m/Y H:i" }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        {% if user_profile.is_operator and operator_profile %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Informações do Operador</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Nome do Operador</dt>
+                    <dd class="col-sm-8">{{ operator_profile.operator_name }}</dd>
+
+                    <dt class="col-sm-4">Número da Licença</dt>
+                    <dd class="col-sm-8">{{ operator_profile.license_number }}</dd>
+
+                    <dt class="col-sm-4">Validade da Licença</dt>
+                    <dd class="col-sm-8">
+                        {{ operator_profile.license_expiry|date:"d/m/Y" }}
+                        {% if operator_profile.is_license_valid %}
+                            <span class="badge bg-success">Válida</span>
+                        {% else %}
+                            <span class="badge bg-danger">Vencida</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-4">Áreas de Serviço</dt>
+                    <dd class="col-sm-8">{{ operator_profile.get_service_areas_display }}</dd>
+                </dl>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Permissões Ativas</h4>
+            </div>
+            <div class="card-body">
+                {% if active_permissions %}
+                <ul class="list-group">
+                    {% for permission in active_permissions %}
+                    <li class="list-group-item">
+                        <h6 class="mb-1">{{ permission.get_permission_name_display }}</h6>
+                        {% if permission.expires_at %}
+                        <small class="text-muted">
+                            Expira em: {{ permission.expires_at|date:"d/m/Y" }}
+                        </small>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted">Nenhuma permissão ativa.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

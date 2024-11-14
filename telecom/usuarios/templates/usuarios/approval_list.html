@@ -1,0 +1,54 @@
+{# usuarios/templates/usuarios/approval_list.html #}
+{% extends "usuarios/base_usuarios.html" %}
+
+{% block usuarios_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="mb-0">Aprovações Pendentes</h3>
+    </div>
+    <div class="card-body">
+        {% if pending_users %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Empresa</th>
+                        <th>Tipo</th>
+                        <th>Data de Registro</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in pending_users %}
+                    <tr>
+                        <td>{{ user.get_full_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.company }}</td>
+                        <td>
+                            {% if user.is_operator %}
+                                <span class="badge bg-primary">{{ user.get_operator_type_display }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Usuário Regular</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'user_approval' user.pk %}" class="btn btn-sm btn-primary">
+                                Revisar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Não há usuários pendentes de aprovação.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

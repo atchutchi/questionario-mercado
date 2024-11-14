@@ -1,0 +1,86 @@
+/* usuarios/static/usuarios/css/dashboard.css */
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.avatar-circle .initials {
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+.activity-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.activity-item {
+    position: relative;
+    padding-bottom: 20px;
+    border-left: 2px solid #e9ecef;
+    margin-left: 15px;
+}
+
+.activity-item:before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #007bff;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.activity-content {
+    padding-left: 15px;
+}
+
+.activity-time {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.activity-text {
+    color: #212529;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    border-bottom: none;
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+}
+
+.btn-outline-primary {
+    border-width: 2px;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}

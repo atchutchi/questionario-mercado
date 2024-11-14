@@ -1,0 +1,23 @@
+{# usuarios/templates/usuarios/_admin_sidebar.html #}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Administração</h5>
+    </div>
+    <div class="list-group list-group-flush">
+        <a href="{% url 'admin_dashboard' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+        </a>
+        <a href="{% url 'pending_approval_list' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'pending_approval_list' %}active{% endif %}">
+            <i class="fas fa-user-clock me-2"></i> Aprovações Pendentes
+            {% if pending_count %}
+                <span class="badge bg-danger float-end">{{ pending_count }}</span>
+            {% endif %}
+        </a>
+        <a href="{% url 'operator_list' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'operator_list' %}active{% endif %}">
+            <i class="fas fa-users-cog me-2"></i> Operadores
+        </a>
+        <a href="{% url 'permission_list' %}" class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'permission_list' %}active{% endif %}">
+            <i class="fas fa-key me-2"></i> Permissões
+        </a>
+    </div>
+</div>

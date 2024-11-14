@@ -1,0 +1,75 @@
+{# usuarios/templates/usuarios/approval_form.html #}
+{% extends "usuarios/base_usuarios.html" %}
+
+{% block usuarios_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="mb-0">Revisar Registro de Usuário</h3>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h4>Informações do Usuário</h4>
+                <dl class="row">
+                    <dt class="col-sm-4">Nome Completo</dt>
+                    <dd class="col-sm-8">{{ object.get_full_name }}</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">{{ object.email }}</dd>
+
+                    <dt class="col-sm-4">Empresa</dt>
+                    <dd class="col-sm-8">{{ object.company }}</dd>
+
+                    <dt class="col-sm-4">Cargo</dt>
+                    <dd class="col-sm-8">{{ object.position }}</dd>
+
+                    <dt class="col-sm-4">Telefone</dt>
+                    <dd class="col-sm-8">{{ object.phone_number }}</dd>
+
+                    <dt class="col-sm-4">Tipo</dt>
+                    <dd class="col-sm-8">
+                        {% if object.is_operator %}
+                            <span class="badge bg-primary">{{ object.get_operator_type_display }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Usuário Regular</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="{{ form.approve.id_for_label }}" class="form-label">
+                    {{ form.approve.label }}
+                </label>
+                <div class="form-check">
+                    {{ form.approve }}
+                    <label class="form-check-label" for="{{ form.approve.id_for_label }}">
+                        Aprovar este usuário
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.notes.id_for_label }}" class="form-label">
+                    {{ form.notes.label }}
+                </label>
+                {{ form.notes }}
+                {% if form.notes.errors %}
+                <div class="invalid-feedback">
+                    {{ form.notes.errors }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+                <a href="{% url 'pending_approval_list' %}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

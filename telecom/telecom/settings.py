@@ -117,6 +117,9 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'usuarios.CustomUser'
+
+
 # Email settings
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

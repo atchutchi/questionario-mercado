@@ -1,0 +1,93 @@
+{# usuarios/templates/usuarios/permission_list.html #}
+{% extends "usuarios/base_usuarios.html" %}
+
+{% block usuarios_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="mb-0">Gestão de Permissões</h3>
+    </div>
+    <div class="card-body">
+        <!-- Filtros -->
+        <div class="mb-4">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Usuário</label>
+                    <select name="user" class="form-select">
+                        <option value="">Todos</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if request.GET.user|add:"0" == user.id %}selected{% endif %}>
+                                {{ user.get_full_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="active" {% if request.GET.status == 'active' %}selected{% endif %}>Ativas</option>
+                        <option value="inactive" {% if request.GET.status == 'inactive' %}selected{% endif %}>Inativas</option>
+                    </select>
+                </div>
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </form>
+        </div>
+
+        {% if permissions %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Permissão</th>
+                        <th>Status</th>
+                        <th>Concedida em</th>
+                        <th>Expira em</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permission in permissions %}
+                    <tr>
+                        <td>{{ permission.user.get_full_name }}</td>
+                        <td>{{ permission.get_permission_name_display }}</td>
+                        <td>
+                            {% if permission.is_active %}
+                                <span class="badge bg-success">Ativa</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inativa</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ permission.granted_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if permission.expires_at %}
+                                {{ permission.expires_at|date:"d/m/Y" }}
+                            {% else %}
+                                <span class="text-muted">Não expira</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{% url 'permission_edit' permission.pk %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'permission_delete' permission.pk %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            Nenhuma permissão encontrada.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
