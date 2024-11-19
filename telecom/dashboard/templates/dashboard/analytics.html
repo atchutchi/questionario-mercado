@@ -1,0 +1,64 @@
+{# dashboard/templates/dashboard/analytics.html #}
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Análise de Dados</h2>
+        <div class="filters">
+            <select class="form-select d-inline-block w-auto me-2">
+                <option value="">Todos os Anos</option>
+                {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select>
+            <select class="form-select d-inline-block w-auto">
+                <option value="">Todas Operadoras</option>
+                {% for operator in operators %}
+                    <option value="{{ operator.id }}">{{ operator.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Market Share -->
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card p-3">
+                <h5>Divisão de Mercado</h5>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="marketShareChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Trends -->
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card p-3">
+                <h5>Tendências de Receita</h5>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="revenueTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic Analysis -->
+        <div class="col-12 mb-4">
+            <div class="dashboard-card p-3">
+                <h5>Análise de Tráfego</h5>
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="trafficAnalysisChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'dashboard/js/analytics.js' %}"></script>
+{% endblock %}
