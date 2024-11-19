@@ -2,48 +2,57 @@
 {% load static %}
 
 <div class="collapse navbar-collapse justify-content-center" id="main-nav">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link text-black" href="{% url 'home' %}">Mercado de Telefonia Móvel</a>
-        </li>
-        {% if request.user.is_authenticated %}
-            {% if request.user.is_superuser %}
-            <li class="nav-item dropdown">
-                <a class="nav-link text-black dropdown-toggle" href="#" id="admin-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Administração
-                </a>
-                <div class="dropdown-menu border-0" aria-labelledby="admin-dropdown">
-                    <a href="{% url 'usuarios:admin_dashboard' %}" class="dropdown-item">Dashboard Admin</a>
-                    <a href="{% url 'usuarios:pending_approval_list' %}" class="dropdown-item">Aprovações Pendentes</a>
-                    <a href="{% url 'usuarios:operator-list' %}" class="dropdown-item">Operadores</a>
-                    <a href="{% url 'usuarios:permission_list' %}" class="dropdown-item">Permissões</a>
-                </div>
-            </li>
-            {% endif %}
-        {% endif %}
-        <li class="nav-item dropdown">
-            <a class="nav-link text-black dropdown-toggle" href="#" id="questionarios-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Questionários
-            </a>
-            <div class="dropdown-menu border-0" aria-labelledby="questionarios-dropdown">
-                <a href="{% url 'estacoes_moveis_list' %}" class="dropdown-item">Estações Móveis</a>
-                <a href="{% url 'trafego_originado_list' %}" class="dropdown-item">Tráfego Originado</a>
-                <a href="{% url 'trafego_terminado_list' %}" class="dropdown-item">Tráfego Terminado</a>
-                <a href="{% url 'trafego_roaming_internacional_list' %}" class="dropdown-item">Tráfego Roaming Internacional</a>
-                <a href="{% url 'lbi_list' %}" class="dropdown-item">LBI</a>
-                <a href="{% url 'trafego_internet_list' %}" class="dropdown-item">Tráfego de Internet</a>
-                <a href="{% url 'internet_fixo_list' %}" class="dropdown-item">Internet Fixo</a>
-                <div class="dropdown-submenu">
-                    <a href="#" class="dropdown-item dropdown-toggle">Tarifário Voz</a>
-                    <div class="dropdown-menu">
-                        <a href="{% url 'tarifario_orange_list' %}" class="dropdown-item">Orange</a>
-                        <a href="{% url 'tarifario_mtn_list' %}" class="dropdown-item">MTN</a>
-                    </div>
-                </div>
-                <a href="{% url 'receitas_list' %}" class="dropdown-item">Receitas</a>
-                <a href="{% url 'emprego_list' %}" class="dropdown-item">Empregos</a>
-                <a href="{% url 'investimento_list' %}" class="dropdown-item">Investimento</a>
-            </div>
-        </li>
-    </ul>
+   <ul class="navbar-nav">
+       {% if request.user.is_authenticated %}
+           <li class="nav-item">
+               <a href="{% url 'dashboard:home' %}" class="nav-link text-black">Dashboard</a>
+           </li>
+           {% if request.user.is_staff %}
+               <li class="nav-item">
+                   <a href="{% url 'dashboard:analytics' %}" class="nav-link text-black">Análises</a>
+               </li>
+               <li class="nav-item">
+                   <a href="{% url 'dashboard:reports' %}" class="nav-link text-black">Relatórios</a>
+               </li>
+           {% endif %}
+           
+           {% if request.user.is_superuser %}
+           <li class="nav-item dropdown">
+               <a class="nav-link text-black dropdown-toggle" href="#" id="admin-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Administração
+               </a>
+               <div class="dropdown-menu border-0" aria-labelledby="admin-dropdown">
+                   <a href="{% url 'usuarios:admin_dashboard' %}" class="dropdown-item">Dashboard Admin</a>
+                   <a href="{% url 'usuarios:pending_approval_list' %}" class="dropdown-item">Aprovações Pendentes</a>
+                   <a href="{% url 'usuarios:operator-list' %}" class="dropdown-item">Operadores</a>
+                   <a href="{% url 'usuarios:permission_list' %}" class="dropdown-item">Permissões</a>
+               </div>
+           </li>
+           {% endif %}
+       {% endif %}
+       <li class="nav-item dropdown">
+           <a class="nav-link text-black dropdown-toggle" href="#" id="questionarios-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Questionários
+           </a>
+           <div class="dropdown-menu border-0" aria-labelledby="questionarios-dropdown">
+               <a href="{% url 'estacoes_moveis_list' %}" class="dropdown-item">Estações Móveis</a>
+               <a href="{% url 'trafego_originado_list' %}" class="dropdown-item">Tráfego Originado</a>
+               <a href="{% url 'trafego_terminado_list' %}" class="dropdown-item">Tráfego Terminado</a>
+               <a href="{% url 'trafego_roaming_internacional_list' %}" class="dropdown-item">Tráfego Roaming Internacional</a>
+               <a href="{% url 'lbi_list' %}" class="dropdown-item">LBI</a>
+               <a href="{% url 'trafego_internet_list' %}" class="dropdown-item">Tráfego de Internet</a>
+               <a href="{% url 'internet_fixo_list' %}" class="dropdown-item">Internet Fixo</a>
+               <div class="dropdown-submenu">
+                   <a href="#" class="dropdown-item dropdown-toggle">Tarifário Voz</a>
+                   <div class="dropdown-menu">
+                       <a href="{% url 'tarifario_orange_list' %}" class="dropdown-item">Orange</a>
+                       <a href="{% url 'tarifario_mtn_list' %}" class="dropdown-item">MTN</a>
+                   </div>
+               </div>
+               <a href="{% url 'receitas_list' %}" class="dropdown-item">Receitas</a>
+               <a href="{% url 'emprego_list' %}" class="dropdown-item">Empregos</a>
+               <a href="{% url 'investimento_list' %}" class="dropdown-item">Investimento</a>
+           </div>
+       </li>
+   </ul>
 </div>

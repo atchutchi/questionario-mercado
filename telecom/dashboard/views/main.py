@@ -5,19 +5,19 @@ from django.db.models import Count
 from django.utils import timezone
 from usuarios.models import CustomUser, OperatorProfile
 from questionarios.models import (
-   EstacoesMoveisIndicador,
-   TrafegoOriginadoIndicador, 
-   TrafegoTerminadoIndicador,
-   TrafegoRoamingInternacionalIndicador,
-   LBIIndicador,
-   TrafegoInternetIndicador,
-   InternetFixoIndicador,
-   TarifarioVozIndicador,
-   ReceitasIndicador,
-   EmpregoIndicador,
-   InvestimentoIndicador
+    EstacoesMoveisIndicador,
+    TrafegoOriginadoIndicador, 
+    TrafegoTerminadoIndicador,
+    TrafegoRoamingInternacionalIndicador,
+    LBIIndicador,
+    TrafegoInternetIndicador,
+    InternetFixoIndicador,
+    TarifarioVozMTNIndicador,  # Corrigido
+    TarifarioVozOrangeIndicador,  # Adicionado
+    ReceitasIndicador,
+    EmpregoIndicador,
+    InvestimentoIndicador
 )
-
 class DashboardView(LoginRequiredMixin, TemplateView):
    template_name = 'dashboard/home.html'
    
