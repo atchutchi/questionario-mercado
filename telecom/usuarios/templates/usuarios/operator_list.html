@@ -1,69 +1,55 @@
 {# usuarios/templates/usuarios/operator_list.html #}
 {% extends "usuarios/base_usuarios.html" %}
 
-{% block usuarios_content %}
+{% block content %}
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3 class="mb-0">Operadores</h3>
-        <a href="{% url 'operator_create' %}" class="btn btn-primary">
+        <a href="{% url 'usuarios:operator-create' %}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Novo Operador
         </a>
     </div>
     <div class="card-body">
         {% if operators %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Empresa</th>
-                        <th>Licença</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for operator in operators %}
-                    <tr>
-                        <td>{{ operator.get_full_name }}</td>
-                        <td>{{ operator.get_operator_type_display }}</td>
-                        <td>{{ operator.company }}</td>
-                        <td>
-                            {% if operator.operator_profile %}
-                                {{ operator.operator_profile.license_number }}
-                            {% else %}
-                                <span class="text-muted">Não definida</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if operator.operator_profile.is_license_valid %}
-                                <span class="badge bg-success">Ativa</span>
-                            {% else %}
-                                <span class="badge bg-danger">Vencida</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="{% url 'operator_edit' operator.operator_profile.pk %}" 
-                                   class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="{% url 'operator_detail' operator.operator_profile.pk %}" 
-                                   class="btn btn-sm btn-info">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Licença</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for operator in operators %}
+                            <tr>
+                                <td>{{ operator.operator_name }}</td>
+                                <td>{{ operator.license_number }}</td>
+                                <td>
+                                    {% if operator.is_license_valid %}
+                                        <span class="badge bg-success">Ativa</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Vencida</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'usuarios:operator-detail' operator.pk %}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'usuarios:operator-edit' operator.pk %}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
-        <div class="alert alert-info">
-            Nenhum operador cadastrado.
-        </div>
+            <div class="alert alert-info">
+                Nenhum operador cadastrado.
+            </div>
         {% endif %}
     </div>
 </div>

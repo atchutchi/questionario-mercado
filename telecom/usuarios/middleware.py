@@ -16,10 +16,12 @@ class ApprovalMiddleware:
         self.public_urls = [
             '/accounts/logout/',
             '/accounts/password/reset/',
-            '/approval-pending/',
+            '/usuarios/approval-pending/',
             '/static/',
             '/media/',
             '/admin/',
+            '/usuarios/login/',
+            '/usuarios/logout/',
         ]
 
     def __call__(self, request):
@@ -31,7 +33,7 @@ class ApprovalMiddleware:
                         request,
                         _('Sua conta ainda está pendente de aprovação.')
                     )
-                    return redirect('approval_pending')
+                    return redirect('usuarios:approval_pending')
 
         response = self.get_response(request)
         return response

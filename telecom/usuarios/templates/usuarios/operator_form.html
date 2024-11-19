@@ -2,66 +2,59 @@
 {% extends "usuarios/base_usuarios.html" %}
 {% load static %}
 
-{% block usuarios_content %}
+{% block content %}
 <div class="card">
     <div class="card-header">
         <h3 class="mb-0">{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Operador</h3>
     </div>
     <div class="card-body">
-        <form method="post" class="needs-validation" novalidate>
+        <form method="post">
             {% csrf_token %}
             
-            <div class="row">
-                <!-- Informações Básicas -->
-                <div class="col-md-6 mb-3">
-                    <label for="{{ form.operator_name.id_for_label }}" class="form-label">
-                        {{ form.operator_name.label }}
-                    </label>
-                    {{ form.operator_name }}
-                    {% if form.operator_name.errors %}
+            <div class="mb-3">
+                <label class="form-label">{{ form.operator_name.label }}</label>
+                {{ form.operator_name }}
+                {% if form.operator_name.errors %}
                     <div class="invalid-feedback">
                         {{ form.operator_name.errors }}
                     </div>
-                    {% endif %}
-                </div>
+                {% endif %}
+            </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="{{ form.license_number.id_for_label }}" class="form-label">
-                        {{ form.license_number.label }}
-                    </label>
-                    {{ form.license_number }}
-                    {% if form.license_number.errors %}
+            <div class="mb-3">
+                <label class="form-label">{{ form.license_number.label }}</label>
+                {{ form.license_number }}
+                {% if form.license_number.errors %}
                     <div class="invalid-feedback">
                         {{ form.license_number.errors }}
                     </div>
-                    {% endif %}
-                </div>
+                {% endif %}
+            </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="{{ form.license_expiry.id_for_label }}" class="form-label">
-                        {{ form.license_expiry.label }}
-                    </label>
-                    {{ form.license_expiry }}
-                    {% if form.license_expiry.errors %}
+            <div class="mb-3">
+                <label class="form-label">{{ form.license_expiry.label }}</label>
+                {{ form.license_expiry }}
+                {% if form.license_expiry.errors %}
                     <div class="invalid-feedback">
                         {{ form.license_expiry.errors }}
                     </div>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
 
-            <!-- Áreas de Serviço -->
-            <div class="mb-4">
-                <h4>Áreas de Serviço</h4>
-                <div id="service-areas" class="row">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Áreas de Serviço</h5>
+                </div>
+                <div class="card-body">
                     {{ form.service_areas }}
                 </div>
             </div>
 
-            <!-- Contato Técnico -->
-            <div class="mb-4">
-                <h4>Contato Técnico</h4>
-                <div id="technical-contact-form">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Contato Técnico</h5>
+                </div>
+                <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nome</label>
@@ -81,7 +74,7 @@
 
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{% url 'operator_list' %}" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'usuarios:operator-list' %}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>

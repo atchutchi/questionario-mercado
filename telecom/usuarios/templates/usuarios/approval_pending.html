@@ -1,0 +1,38 @@
+{# usuarios/templates/usuarios/approval_pending.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">Aprovação Pendente</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-clock fa-4x text-warning"></i>
+                    </div>
+                    <h5 class="text-center mb-4">Sua conta está aguardando aprovação</h5>
+                    <p class="text-center">
+                        Obrigado por se registrar no nosso sistema. Sua conta está atualmente sob revisão 
+                        pelos nossos administradores. Você receberá um email assim que sua conta for aprovada.
+                    </p>
+                    <p class="text-center mb-0">
+                        <small class="text-muted">
+                            Em caso de dúvidas, entre em contato com o suporte.
+                        </small>
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <form method="post" action="{% url 'usuarios:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">Sair</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

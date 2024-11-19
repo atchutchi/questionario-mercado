@@ -16,14 +16,16 @@ urlpatterns = [
    path('admin-dashboard/', dashboard.AdminDashboardView.as_view(), name='admin_dashboard'),
 
    # Approval URLs
+   path('approval-pending/', profiles.ApprovalPendingView.as_view(), name='approval_pending'),  # Adicionada aqui
    path('approvals/', approvals.PendingApprovalListView.as_view(), name='pending_approval_list'),
    path('approvals/<int:pk>/review/', approvals.UserApprovalView.as_view(), name='user_approval'),
 
    # Operator URLs
-   path('operators/', operators.OperatorListView.as_view(), name='operator_list'),
-   path('operators/create/', operators.OperatorProfileCreateView.as_view(), name='operator_create'),
-   path('operators/<int:pk>/edit/', operators.OperatorProfileUpdateView.as_view(), name='operator_edit'),
-   path('operators/<int:pk>/', operators.OperatorProfileDetailView.as_view(), name='operator_detail'),
+    path('operators/', operators.OperatorListView.as_view(), name='operator-list'),
+    path('operators/add/', operators.OperatorProfileCreateView.as_view(), name='operator-create'),
+    path('operators/<int:pk>/edit/', operators.OperatorProfileUpdateView.as_view(), name='operator-edit'),
+    path('operators/<int:pk>/', operators.OperatorProfileDetailView.as_view(), name='operator-detail'),
+
 
    # Permission URLs
    path('permissions/', permissions.PermissionListView.as_view(), name='permission_list'),
@@ -37,6 +39,7 @@ urlpatterns = [
 
    # Email Confirmation
    path('approve-email/<str:key>/', profiles.ApproveEmailView.as_view(), name='approve_email'),
+
 
    # Custom Authentication URLs
    path('login/', profiles.CustomLoginView.as_view(), name='login'),

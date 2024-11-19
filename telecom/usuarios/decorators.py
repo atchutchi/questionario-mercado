@@ -22,17 +22,12 @@ def admin_required(view_func):
     return _wrapped_view
 
 def approved_user_required(view_func):
-    """
-    Decorator para verificar se o usuário está aprovado.
-    """
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.error(request, _('Por favor, faça login para acessar esta página.'))
-            return redirect('account_login')
-        if not request.user.is_approved:
-            messages.warning(request, _('Sua conta ainda não foi aprovada.'))
-            return redirect('approval_pending')
+            return redirect('usuarios:login')
+        if not request.user.is_approved and not request.user.is_superuser:
+            return redirect('usuarios:approval_pending')
         return view_func(request, *args, **kwargs)
     return _wrapped_view
 

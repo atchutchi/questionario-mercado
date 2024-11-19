@@ -11,7 +11,7 @@
                 {% if request.user.is_superuser %}
                     <a href="{% url 'usuarios:admin_dashboard' %}" class="dropdown-item">Dashboard Admin</a>
                     <a href="{% url 'usuarios:pending_approval_list' %}" class="dropdown-item">Aprovações</a>
-                    <a href="{% url 'usuarios:operator_list' %}" class="dropdown-item">Operadores</a>
+                    <a href="{% url 'usuarios:operator-list' %}" class="dropdown-item">Operadores</a>
                 {% endif %}
                 <a href="{% url 'usuarios:profile_view' %}" class="dropdown-item">Meu Perfil</a>
                 <a href="{% url 'usuarios:profile_edit' %}" class="dropdown-item">Editar Perfil</a>

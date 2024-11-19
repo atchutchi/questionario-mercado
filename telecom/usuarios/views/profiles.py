@@ -91,6 +91,25 @@ class ApproveEmailView(View):
             messages.error(request, _('Link de confirmação inválido ou expirado.'))
             return redirect('login')
 
+
+class ApprovalPendingView(TemplateView):
+    """View para usuários aguardando aprovação."""
+    template_name = 'usuarios/approval_pending.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.is_approved or request.user.is_superuser:
+                return redirect('home')
+        else:
+            return redirect('usuarios:login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+
 class ChangeEmailView(View):
     template_name = 'usuarios/profile/change_email.html'
     success_url = reverse_lazy('profile_view')
