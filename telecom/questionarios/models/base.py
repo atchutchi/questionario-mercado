@@ -19,8 +19,7 @@ class IndicadorBase(models.Model):
     )
 
     class Meta:
-        abstract = True
-        
+        abstract = True        
     def save_to_supabase(self, table_name):
         """
         Salva os dados do modelo no Supabase
