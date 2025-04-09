@@ -4,7 +4,6 @@ Django settings for telecom project.
 
 import os
 import sys
-import urllib.parse
 from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
@@ -23,7 +22,7 @@ SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qz%z$@+&^-*4b58hecisc*j#$qg787$mk7g=zz*n^c8wo-mgey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = True  # 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -78,7 +77,7 @@ MIDDLEWARE = [
 ]
 
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 if DEBUG:
     DATABASES = {
         'default': {
@@ -90,9 +89,7 @@ else:
     DATABASES = {
         'default': dj_database_url.parse(
             os.environ.get('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True
+            conn_max_age=600
         )
     }
     # Configurações específicas para Neon

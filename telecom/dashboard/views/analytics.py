@@ -18,6 +18,14 @@ from questionarios.models import (
     InvestimentoIndicador
 )
 
+class AnalyticsView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/analytics/overview.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Análise de Mercado - Visão Geral'
+        return context
+
 class MarketAnalyticsView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
    template_name = 'dashboard/analytics/market.html'
    

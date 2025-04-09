@@ -29,7 +29,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
        LBIIndicador,
        TrafegoInternetIndicador,
        InternetFixoIndicador,
-       TarifarioVozIndicador,
+       TarifarioVozMTNIndicador,
+       TarifarioVozOrangeIndicador,
        ReceitasIndicador,
        EmpregoIndicador,
        InvestimentoIndicador
