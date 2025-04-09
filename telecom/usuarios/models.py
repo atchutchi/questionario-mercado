@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+import json
 
 class CustomUser(AbstractUser):
     """
@@ -198,14 +199,14 @@ class OperatorProfile(models.Model):
         null=True,
         blank=True
     )
-    service_areas = models.JSONField(
+    service_areas = models.TextField(
         _('áreas de serviço'),
-        default=list,
+        default='[]',
         help_text=_('Regiões onde o operador atua')
     )
-    technical_contact = models.JSONField(
+    technical_contact = models.TextField(
         _('contato técnico'),
-        default=dict,
+        default='{}',
         help_text=_('Informações do contato técnico')
     )
     is_active = models.BooleanField(
@@ -244,7 +245,33 @@ class OperatorProfile(models.Model):
 
     def get_service_areas_display(self):
         """Retorna as áreas de serviço formatadas."""
-        return ", ".join(self.service_areas)
+        try:
+            service_areas = json.loads(self.service_areas)
+            return ", ".join(service_areas)
+        except json.JSONDecodeError:
+            return ""
+            
+    def get_service_areas(self):
+        """Retorna as áreas de serviço como lista."""
+        try:
+            return json.loads(self.service_areas)
+        except json.JSONDecodeError:
+            return []
+            
+    def set_service_areas(self, areas):
+        """Define as áreas de serviço."""
+        self.service_areas = json.dumps(areas)
+        
+    def get_technical_contact(self):
+        """Retorna o contato técnico como dicionário."""
+        try:
+            return json.loads(self.technical_contact)
+        except json.JSONDecodeError:
+            return {}
+            
+    def set_technical_contact(self, contact):
+        """Define o contato técnico."""
+        self.technical_contact = json.dumps(contact)
 
 class UserPermission(models.Model):
     """

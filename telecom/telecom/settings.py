@@ -24,6 +24,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-qz%z$@+&^-*4b58hecisc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # 'DEVELOPMENT' in os.environ
 
+# Desativar a validação de JSON no SQLite
+SILENCED_SYSTEM_CHECKS = ['django.db.backends.sqlite3.check_database_features.check_json_field_support']
+
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
