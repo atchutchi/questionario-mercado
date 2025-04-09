@@ -63,8 +63,22 @@ class EstacoesMoveisIndicador(IndicadorBase):
                 (self.associados_situacoes_especificas or 0) + 
                 (self.outros_residuais or 0))
 
-    def str(self):
-        return f"Estações Móveis e Mobile Money - {self.ano}/{self.mes}"
+    def __str__(self):
+        return f"Estações Móveis e Mobile Money - {self.operadora} - {self.ano}/{self.mes}"
+
+    def save(self, *args, **kwargs):
+        # Salva no Django
+        super().save(*args, **kwargs)
+        # Salva no Supabase
+        self.save_to_supabase('estacoes_moveis')
+        
+    def delete(self, *args, **kwargs):
+        # Deleta do Supabase
+        self.delete_from_supabase('estacoes_moveis')
+        # Deleta do Django
+        super().delete(*args, **kwargs)
 
     class Meta:
         unique_together = ('ano', 'mes', 'operadora')
+        verbose_name = "Estações Móveis"
+        verbose_name_plural = "Estações Móveis"

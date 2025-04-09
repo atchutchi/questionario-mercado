@@ -60,6 +60,13 @@
                 </a>
             </div>
             {% endif %}
+
+            <div class="nav-section mb-3">
+                <h6 class="text-secondary mb-2">Outros</h6>
+                <a href="{% url 'dashboard:chatbot' %}" class="nav-link {% if active_page == 'chatbot' %}active{% endif %}">
+                    <i class="fas fa-robot me-2"></i> Assistente Virtual
+                </a>
+            </div>
         </nav>
     </div>
 
